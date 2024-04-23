@@ -55,6 +55,7 @@ namespace Player.StateMachine
         public PlayerStateData(int maxAmmo)
         {
             _maxAmmo = maxAmmo;
+            _ammo = _maxAmmo;
         }
     }
 }

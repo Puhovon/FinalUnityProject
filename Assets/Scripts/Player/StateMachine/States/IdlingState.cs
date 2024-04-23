@@ -22,9 +22,10 @@
         {
             base.Update();
 
+            if(isShooting())
+                StateSwitcher.SwitchState<WalkingState>();
             if (IsInputZero())
                 return;
-            
             StateSwitcher.SwitchState<RunningState>();
 
         }

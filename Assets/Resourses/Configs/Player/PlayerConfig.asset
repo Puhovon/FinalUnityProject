@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d36ff787c844089b53f14ff91f8349, type: 3}
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
+  _runningStateConfig:
+    <Speed>k__BackingField: 5
   _walkingStateConfig:
-    <Speed>k__BackingField: 0
+    <Speed>k__BackingField: 3
+    <MaxAmmo>k__BackingField: 10
+    <TimeToNextShoot>k__BackingField: 0.2
+  _reloadingStateConfig:
+    <TimeToReload>k__BackingField: 5

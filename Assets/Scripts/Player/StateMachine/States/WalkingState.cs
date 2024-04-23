@@ -1,4 +1,5 @@
 ﻿using Player.Configs;
+using UnityEngine;
 
 namespace Player.StateMachine.States
 {
@@ -18,6 +19,7 @@ namespace Player.StateMachine.States
         public override void Enter()
         {
             base.Enter();
+            Debug.Log(Data.Ammo);
         }
 
         public override void Exit()
@@ -32,8 +34,8 @@ namespace Player.StateMachine.States
             {
                 if (Data.Ammo > 0)
                 {
-                    _shooter.shoot?.Invoke();
-                    Data.Ammo -= 1;
+                    _shooter.shoot?.Invoke(Data);
+                    Debug.Log(Data.Ammo);
                 }
                 else 
                     StateSwitcher.SwitchState<ReloadingState>();

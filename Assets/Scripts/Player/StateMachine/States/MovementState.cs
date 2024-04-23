@@ -22,7 +22,7 @@ namespace Player.StateMachine.States
         
         public virtual void Enter()
         {
-            Debug.Log(GetType());
+
         }
 
         public virtual void Exit()

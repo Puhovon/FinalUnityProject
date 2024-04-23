@@ -6,14 +6,11 @@ namespace Player.StateMachine.States
     public class ReloadingState : MovementState
     {
         private readonly ReloadingStateConfig _config;
-        private readonly WalkingStateConfig _ammo;
+
         private float _currentTime;
         public ReloadingState(IStateSwitcher stateSwitcher, PlayerStateData data, Player player) : base(stateSwitcher,
-            data, player)
-        {
+            data, player) =>
             _config = player.Config.ReloadingStateConfig;
-            _ammo = player.Config.WalkingStateConfig;
-        }
 
         public override void Enter()
         {
