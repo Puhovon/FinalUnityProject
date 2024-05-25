@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Abstractions;
+using Assets.Scripts.Abstractions;
 
 namespace Utilities
 {

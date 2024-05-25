@@ -17,6 +17,6 @@ MonoBehaviour:
   _walkingStateConfig:
     <Speed>k__BackingField: 3
     <MaxAmmo>k__BackingField: 10
-    <TimeToNextShoot>k__BackingField: 0.2
+    <TimeToNextShoot>k__BackingField: 1
   _reloadingStateConfig:
     <TimeToReload>k__BackingField: 5

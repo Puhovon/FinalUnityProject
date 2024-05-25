@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Abstractions;
+using Assets.Scripts.Abstractions;
 using UnityEngine;
 
 namespace Utilities
@@ -26,12 +26,14 @@ namespace Utilities
             {
                 if (!collider.TryGetComponent(out IEntity entity))
                     continue;
-                if(!searchTag.Contains(collider.tag))
-                    continue;
+ //               if(!searchTag.Contains(collider.tag))
+ //                 continue;
                 findedCharacters.Add(entity);
             }
 
             return findedCharacters;
         }
+
+
     }
 }
