@@ -2,23 +2,23 @@
 
 namespace Assets.Scripts.Enemy.StateMachine
 {
-    internal class RangeStateData : EnemyStateData
+    internal class RangeStateData
     {
-        private int _ammo;
-        private int _maxAmmo;
+        //private int _ammo;
+        //private int _maxAmmo;
 
-        public int MaxAmmo => _maxAmmo;
+        //public int MaxAmmo => _maxAmmo;
 
-        public int Ammo
-        {
-            get => _ammo;
-            set
-            {
-                if (value < 0 || value > _maxAmmo)
-                    throw new ArgumentOutOfRangeException("invalid ammo count");
-                _ammo = value;
-            }
-        }
+        //public int Ammo
+        //{
+        //    get => _ammo;
+        //    set
+        //    {
+        //        if (value < 0 || value > _maxAmmo)
+        //            throw new ArgumentOutOfRangeException("invalid ammo count");
+        //        _ammo = value;
+        //    }
+        //}
 
     }
 }

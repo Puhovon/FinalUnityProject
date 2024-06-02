@@ -26,14 +26,10 @@ namespace Utilities
             {
                 if (!collider.TryGetComponent(out IEntity entity))
                     continue;
- //               if(!searchTag.Contains(collider.tag))
- //                 continue;
                 findedCharacters.Add(entity);
             }
 
             return findedCharacters;
         }
-
-
     }
 }

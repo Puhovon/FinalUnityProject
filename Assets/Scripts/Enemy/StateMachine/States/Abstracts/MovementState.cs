@@ -25,6 +25,7 @@ namespace Assets.Scripts.Enemy.StateMachine.States.Abstracts
         protected CharacterController CharacterController => _enemy.СharacterController;
         protected EnemyView View => _enemy.View;
         protected Transform PlayerTransform => _playerTransform;
+        protected Enemy Enemy => _enemy;
 
         public virtual void Enter()
         {

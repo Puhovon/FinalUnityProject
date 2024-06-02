@@ -15,17 +15,18 @@ namespace Assets.Scripts.Enemy.StateMachine
         private IState _currentState;
         private Transform _playerTransform;
 
-        public EnemyStateMachine(Enemy enemy, Shooter shooter, EnemyConfigs config, Transform playerTransform)
+        public EnemyStateMachine(Enemy enemy, Shooter shooter, EnemyConfigs config, Transform playerTransform,
+            EnemyStateData enemyStateData)
         {
             _shooter = shooter;
             _playerTransform = playerTransform;
-            var data = new EnemyStateData();
+            
             SearchAround searchAround = new SearchAround(enemy.transform, config.PatrollingConfig.DistanceToDetect);
             _states = new List<IState>()
             {
-                new PatrollingState(this, data, enemy, playerTransform, searchAround),
-                new AttackState(this, data, enemy, _playerTransform, searchAround),
-                new LoseState(this, data, enemy, playerTransform, searchAround),
+                new PatrollingState(this, enemyStateData, enemy, playerTransform, searchAround),
+                new AttackState(this, enemyStateData, enemy, _playerTransform, searchAround),
+                new LoseState(this, enemyStateData, enemy, playerTransform, searchAround),
             };
             _currentState = _states[0];
             _currentState.Enter();

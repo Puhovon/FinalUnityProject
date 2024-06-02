@@ -1,16 +1,25 @@
 ﻿using Assets.Scripts.PlayerScripts;
 using UnityEngine;
 using UnityEngine.AI;
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 
 namespace Assets.Scripts.Enemy.StateMachine
 {
     public class Enemy : MonoBehaviour
     {
+        [Header("Links")]
+
         [SerializeField] private Transform _playerTransform;
-        [SerializeField]private EnemyConfigs _config;
+        [SerializeField] private NavMeshAgent _navMeshAgent;
+        
+        [Header("Settings")]
+
+        [SerializeField] private EnemyConfigs _config;
+        [SerializeField] private EnemyType _type;
+        [SerializeField] private EnemyView _view;
+        [SerializeField] private Transform[] _patrollingPoints;
+
         private CharacterController _characterController;
-        private NavMeshAgent _navMeshAgent;
-        private EnemyView _view;
         private EnemyStateMachine _stateMachine;
 
         public CharacterController СharacterController => _characterController;
@@ -20,7 +29,23 @@ namespace Assets.Scripts.Enemy.StateMachine
 
         private void Awake()
         {
-            _stateMachine = new EnemyStateMachine(this, new Shooter(), _config, _playerTransform);
+            _view.Initialize();
+            InitializeDeps();
+            
+            _navMeshAgent.speed = _config.PatrollingConfig.Speed;
+        }
+
+        private void InitializeDeps()
+        {
+            var data = new EnemyStateData(_config.PatrollingConfig.Speed,
+                _config.PatrollingConfig.ChillTime,
+                _patrollingPoints);
+
+            _stateMachine = new EnemyStateMachine(this,
+                new Shooter(),
+                _config,
+                _playerTransform,
+                data);
         }
 
         private void Update()

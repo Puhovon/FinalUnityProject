@@ -24,11 +24,13 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         public override void Enter()
         {
             base.Enter();
+            View.IdlingStart();
         }
 
         public override void Exit()
         {
             base.Exit();
+            View.IdlingStop();
         }
 
         public override void Update()
@@ -39,6 +41,9 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             if (finded == null)
                 StateSwitcher.SwitchState<LoseState>();
 
+            _enemy.NavMeshAgent.Move(PlayerTransform.position);
+            if (_enemy.NavMeshAgent.destination.magnitude <= _config.DistanceToAttack)
+                _canAttack = true;
             if (_canAttack)
             {
                 Attack();
@@ -47,6 +52,7 @@ namespace Assets.Scripts.Enemy.StateMachine.States
 
         private void Attack()
         {
+            Debug.Log("ATTACK");
             _canAttack = false;
         }
 
