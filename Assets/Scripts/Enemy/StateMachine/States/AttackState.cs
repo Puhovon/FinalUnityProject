@@ -12,7 +12,7 @@ namespace Assets.Scripts.Enemy.StateMachine.States
     {
         private readonly AttackConfig _config;
         private Enemy _enemy;
-        private bool _canAttack;
+        private bool _canAttack = true;
         private bool _seePlayer;
         public AttackState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, Transform playerTransform, SearchAround searchAround)
             : base(stateSwitcher, data, enemy, playerTransform, searchAround)
@@ -41,25 +41,39 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             if (finded == null)
                 StateSwitcher.SwitchState<LoseState>();
 
-            _enemy.NavMeshAgent.Move(PlayerTransform.position);
-            if (_enemy.NavMeshAgent.destination.magnitude <= _config.DistanceToAttack)
-                _canAttack = true;
-            if (_canAttack)
-            {
+            
+            IsCanAttack(finded);
+        }
+
+        private void IsCanAttack(IEntity finded)
+        {
+            if ((_enemy.transform.position - PlayerTransform.position).magnitude <= _config.DistanceToAttack) {
+                Debug.Log("ATTACK!!!!!!!!!!!!!");
+                //finded.Transform.GetComponent<IDamagable>();
+                _enemy.NavMeshAgent.isStopped = true;
                 Attack();
+            } else
+            {
+                _enemy.NavMeshAgent.isStopped = false;
+                _enemy.NavMeshAgent.destination = (PlayerTransform.position);
             }
         }
 
         private void Attack()
         {
-            Debug.Log("ATTACK");
-            _canAttack = false;
+            if (_canAttack)
+            {
+                Debug.Log("Attack huy");
+                _enemy.StartCoroutine(Reload());
+            }
         }
 
         private IEnumerator Reload()
         {
+            _canAttack = false;
             yield return new WaitForSeconds(_config.TimeToNextAttack);
             _canAttack = true;
         }
+
     }
 }

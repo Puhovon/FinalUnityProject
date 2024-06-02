@@ -56,14 +56,18 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         private IEnumerator Chill()
         {
             _isChilling = true;
-            View.RunningStop();
-            View.ChillingStart();
+
+            //View.RunningStop();
+            //View.ChillingStart();
+            
             for (int i = 0; i < Data.ChillTime; i++)
             {
                 yield return new WaitForSeconds(1);
             }
-            View.ChillingStop();
-            View.RunningStart();
+            
+            //View.ChillingStop();
+            //View.RunningStart();
+            
             _isChilling = false;
             Enemy.NavMeshAgent.destination = Data.PatrollingPoints[_currentPoint].position;
         }

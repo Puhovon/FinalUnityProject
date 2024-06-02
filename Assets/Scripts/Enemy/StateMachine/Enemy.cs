@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.PlayerScripts;
+﻿using Assets.Scripts.Abstractions;
+using Assets.Scripts.PlayerScripts;
 using UnityEngine;
 using UnityEngine.AI;
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
@@ -57,6 +58,9 @@ namespace Assets.Scripts.Enemy.StateMachine
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawSphere(transform.position, _config.PatrollingConfig.DistanceToDetect);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, _config.AttackConfig.DistanceToAttack);
         }
     }
 }
