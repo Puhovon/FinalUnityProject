@@ -15,10 +15,11 @@ MonoBehaviour:
   _patrollingConfig:
     Speed: 3
     DistanceToDetect: 5
+    ChillTime: 2
   _detectedConfig:
     Speed: 1
     TimeToLosePlayer: 2
   _attackConfig:
     Damage: 5
-    TimeToNextAttack: 3
-    DistanceToAttack: 0.9
+    TimeToNextAttack: 1
+    DistanceToAttack: 1.9

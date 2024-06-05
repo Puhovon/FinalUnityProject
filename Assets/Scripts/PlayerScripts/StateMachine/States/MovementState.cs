@@ -9,14 +9,17 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
         protected readonly IStateSwitcher StateSwitcher;
         protected readonly PlayerStateData Data;
         private Player _player;
-        
-        public MovementState(IStateSwitcher stateSwitcher, PlayerStateData data, Player player)
+        protected readonly Shooter _shooter;
+
+        public MovementState(IStateSwitcher stateSwitcher, PlayerStateData data, Player player, Shooter shooter)
         {
             StateSwitcher = stateSwitcher;
             _player = player;
             Data = data;
+            _shooter = shooter;
         }
 
+        protected Shooter Shooter => _shooter;
         protected MainInputActions Input => _player.Input;
         protected CharacterController CharacterController => _player.CharacterController;
         protected PlayerView View => _player.View;

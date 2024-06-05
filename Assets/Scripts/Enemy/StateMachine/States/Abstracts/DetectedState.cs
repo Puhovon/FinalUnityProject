@@ -12,7 +12,7 @@ namespace Assets.Scripts.Enemy.StateMachine.States.Abstracts
         private readonly Enemy _enemy;
         private readonly Transform _playerTransform;
         protected SearchAround SearchAround;
-        protected CharacterController CharacterController => _enemy.СharacterController;
+
         protected EnemyView View => _enemy.View;
         protected Transform PlayerTransform => _playerTransform;
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
 using UnityEngine;
@@ -8,35 +10,64 @@ namespace Assets.Scripts.PlayerScripts
     public class Shooter : MonoBehaviour
     {
         [SerializeField] private PlayerConfig _config;
-        public Action<PlayerStateData> shoot;
+        [SerializeField] private int ammo;
+        [SerializeField] private ParticleSystem _missParticle;
+        public Action<PlayerStateData> Shoot;
 
         private bool _canShoot = true;
         private float _timeToNextShoot;
         private float _currentTime;
+        
         public void Initialize()
         {
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
             _currentTime = 0;
-            shoot += Shoot;
+            Shoot += OnShoot;
         }
 
-        private void Shoot(PlayerStateData data)
+        private void OnShoot(PlayerStateData data)
         {
-            if(_canShoot)
-            {
-                _canShoot = false;
-                data.Ammo -= 1;
-            }
+            ammo = data.Ammo;
+            if (!_canShoot)
+                return;
+            print("SHOOOOOOT");
+            Attack();
+            _canShoot = false;
+            data.Ammo -= 1;
+            if (data.Ammo <= 0)
+                StartCoroutine(Reload(data));
+            else
+                StartCoroutine(CalculateTimeToNextShoot());
         }
 
-        private void Update()
+        private void Attack()
         {
-            _currentTime -= Time.deltaTime;
-            if (_currentTime <= 0f)
+            RaycastHit hit;
+            if (!Physics.Raycast(transform.position, transform.forward, out hit, _config.distance))
+                return;
+            if (!hit.transform.TryGetComponent(out IDamagable damagable))
             {
-                _canShoot = true;
-                _currentTime = _timeToNextShoot;
+                _missParticle.transform.position = hit.transform.position;
+                print(hit.transform.position);
+                _missParticle.Play();
+                print("Miss");
+                return;
             }
+            
+            damagable.TakeDamage(_config.damage);
+        }
+
+        private IEnumerator Reload(PlayerStateData data)
+        {
+            yield return new WaitForSeconds(_config.ReloadingStateConfig.TimeToReload);
+            _canShoot = true;
+            data.Ammo = data.MaxAmmo;
+        }
+
+        private IEnumerator CalculateTimeToNextShoot()
+        {
+            yield return new WaitForSeconds(_timeToNextShoot);
+            _canShoot = true;
         }
     }
 }

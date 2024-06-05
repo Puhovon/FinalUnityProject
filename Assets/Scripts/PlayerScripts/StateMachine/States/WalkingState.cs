@@ -8,13 +8,11 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
     {
         
         private readonly WalkingStateConfig _config;
-        private readonly Shooter _shooter;
 
         public WalkingState(IStateSwitcher stateSwitcher, PlayerStateData data, Player player, Shooter shooter) : base(stateSwitcher,
-            data, player)
+            data, player, shooter)
         {
             _config = player.Config.WalkingStateConfig;
-            _shooter = shooter;
         }
 
         public override void Enter()
@@ -22,7 +20,6 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
             base.Enter();
             View.RunningStart();
             Data.Speed = _config.Speed;
-            Debug.Log(Data.Ammo);
         }
 
         public override void Exit()
@@ -35,7 +32,8 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
         public override void Update()
         {
             base.Update();
-            
+            if(isShooting())
+                Shooter.Shoot?.Invoke(Data);
             if(IsInputZero())
                 StateSwitcher.SwitchState<IdlingState>();
         }

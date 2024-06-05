@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _patrollingConfig:
     Speed: 1
-    DistanceToDetect: 8
+    DistanceToDetect: 15
+    ChillTime: 2
   _detectedConfig:
     Speed: 1
     TimeToLosePlayer: 5

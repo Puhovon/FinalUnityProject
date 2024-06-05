@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Enemy.StateMachine
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IEntity
     {
         [Header("Links")]
 
@@ -20,10 +20,8 @@ namespace Assets.Scripts.Enemy.StateMachine
         [SerializeField] private EnemyView _view;
         [SerializeField] private Transform[] _patrollingPoints;
 
-        private CharacterController _characterController;
         private EnemyStateMachine _stateMachine;
 
-        public CharacterController СharacterController => _characterController;
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
         public EnemyView View => _view;
         public EnemyConfigs Config => _config;
@@ -62,5 +60,7 @@ namespace Assets.Scripts.Enemy.StateMachine
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(transform.position, _config.AttackConfig.DistanceToAttack);
         }
+
+        public Transform Transform { get; }
     }
 }

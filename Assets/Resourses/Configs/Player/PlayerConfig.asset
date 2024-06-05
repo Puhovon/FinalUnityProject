@@ -20,3 +20,5 @@ MonoBehaviour:
     <TimeToNextShoot>k__BackingField: 1
   _reloadingStateConfig:
     <TimeToReload>k__BackingField: 5
+  distance: 100
+  damage: 0

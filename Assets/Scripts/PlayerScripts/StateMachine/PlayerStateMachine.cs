@@ -18,7 +18,7 @@ namespace Assets.Scripts.PlayerScripts.StateMachine
             _shooter = shooter;
             _states = new List<IState>()
             {
-                new IdlingState(this, data, player),
+                new IdlingState(this, data, player, _shooter),
                 new WalkingState(this, data, player, _shooter),
             };
             _currentState = _states[0];

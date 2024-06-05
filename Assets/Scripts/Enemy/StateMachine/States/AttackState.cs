@@ -11,9 +11,10 @@ namespace Assets.Scripts.Enemy.StateMachine.States
     public class AttackState : DetectedState
     {
         private readonly AttackConfig _config;
-        private Enemy _enemy;
+        private readonly Enemy _enemy;
         private bool _canAttack = true;
         private bool _seePlayer;
+
         public AttackState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, Transform playerTransform, SearchAround searchAround)
             : base(stateSwitcher, data, enemy, playerTransform, searchAround)
         {
@@ -48,10 +49,8 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         private void IsCanAttack(IEntity finded)
         {
             if ((_enemy.transform.position - PlayerTransform.position).magnitude <= _config.DistanceToAttack) {
-                Debug.Log("ATTACK!!!!!!!!!!!!!");
-                //finded.Transform.GetComponent<IDamagable>();
                 _enemy.NavMeshAgent.isStopped = true;
-                Attack();
+                Attack(finded);
             } else
             {
                 _enemy.NavMeshAgent.isStopped = false;
@@ -59,11 +58,11 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             }
         }
 
-        private void Attack()
+        private void Attack(IEntity finded)
         {
-            if (_canAttack)
+            if (_canAttack && finded.Transform.TryGetComponent(out IDamagable damagable))
             {
-                Debug.Log("Attack huy");
+                damagable.TakeDamage(_config.Damage);
                 _enemy.StartCoroutine(Reload());
             }
         }

@@ -22,7 +22,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States.Abstracts
             Data = data;
         }
 
-        protected CharacterController CharacterController => _enemy.СharacterController;
         protected EnemyView View => _enemy.View;
         protected Transform PlayerTransform => _playerTransform;
         protected Enemy Enemy => _enemy;

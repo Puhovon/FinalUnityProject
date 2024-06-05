@@ -4,7 +4,7 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 {
     public class IdlingState : MovementState
     {
-        public IdlingState(IStateSwitcher stateSwitcher, PlayerStateData data, Player player) : base(stateSwitcher, data, player)
+        public IdlingState(IStateSwitcher stateSwitcher, PlayerStateData data, Player player, Shooter shooter) : base(stateSwitcher, data, player, shooter)
         {
         }
 
@@ -23,7 +23,8 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
         public override void Update()
         {
             base.Update();
-
+            if (isShooting())
+                Shooter.Shoot?.Invoke(Data);
             if (IsInputZero())
                 return;
 

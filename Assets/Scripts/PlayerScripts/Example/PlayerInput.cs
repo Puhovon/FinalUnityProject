@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.PlayerScripts.Example
 {
-    public class PlayerInput : MonoBehaviour, MainInputActions.IMovementActions
+    public class PlayerInput : MonoBehaviour
     {
         public Vector2 direction; 
         private MainInputActions input;
@@ -12,7 +12,7 @@ namespace Assets.Scripts.PlayerScripts.Example
         private void Awake()
         {
             input = new MainInputActions();
-            input.Movement.SetCallbacks(this);
+            //input.Movement.SetCallbacks(this);
         }
 
         private void OnEnable()
