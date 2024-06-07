@@ -23,6 +23,7 @@ namespace Assets.Scripts.PlayerScripts
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
             _currentTime = 0;
             Shoot += OnShoot;
+            print(_config.distance);
         }
 
         private void OnShoot(PlayerStateData data)
@@ -30,7 +31,6 @@ namespace Assets.Scripts.PlayerScripts
             ammo = data.Ammo;
             if (!_canShoot)
                 return;
-            print("SHOOOOOOT");
             Attack();
             _canShoot = false;
             data.Ammo -= 1;
@@ -43,18 +43,22 @@ namespace Assets.Scripts.PlayerScripts
         private void Attack()
         {
             RaycastHit hit;
-            if (!Physics.Raycast(transform.position, transform.forward, out hit, _config.distance))
-                return;
-            if (!hit.transform.TryGetComponent(out IDamagable damagable))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, _config.distance))
             {
+                if (hit.transform.TryGetComponent(out IDamagable damagable))
+                {
+                    print("HIT");
+                    damagable.TakeDamage(_config.damage);
+                    return;
+                }
+                print("AAAAA");
                 _missParticle.transform.position = hit.transform.position;
-                print(hit.transform.position);
                 _missParticle.Play();
-                print("Miss");
                 return;
             }
-            
-            damagable.TakeDamage(_config.damage);
+            print("Miss");
+
+
         }
 
         private IEnumerator Reload(PlayerStateData data)
@@ -68,6 +72,12 @@ namespace Assets.Scripts.PlayerScripts
         {
             yield return new WaitForSeconds(_timeToNextShoot);
             _canShoot = true;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawRay(transform.position, (transform.forward)* _config.distance);
         }
     }
 }

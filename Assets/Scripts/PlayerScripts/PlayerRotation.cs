@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.PlayerScripts
 {
@@ -15,9 +11,20 @@ namespace Assets.Scripts.PlayerScripts
 
         private void Update()
         {
+            Vector2 mousePosition = _player.Input.Movement.MousePosition.ReadValue<Vector2>();
+            Ray ray = _camera.ScreenPointToRay(new Vector3(mousePosition.x, mousePosition.y, 0));
 
-            Vector2 mousePosition = (_player.Input.Movement.MousePosition.ReadValue<Vector2>());
-            transform.LookAt(new Vector3(mousePosition.x, 0, mousePosition.y));
+            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+            float rayDistance;
+
+            if (groundPlane.Raycast(ray, out rayDistance))
+            {
+                Vector3 point = ray.GetPoint(rayDistance);
+                Vector3 direction = (point - transform.position).normalized;
+
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+            }
         }
     }
 }

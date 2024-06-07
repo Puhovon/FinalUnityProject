@@ -21,7 +21,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         {
             base.Exit();
             _enemy.StopCoroutine(LoseTimer());
-            Debug.Log("Exit");
         }
 
         public override void Update()
@@ -39,10 +38,8 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         {
             for (int i = 0; i < _enemy.Config.DetectedConfig.TimeToLosePlayer; i++)
             {
-                Debug.Log("Wait");
                 yield return new WaitForSeconds(1);
             }
-            Debug.Log("Lose");
             StateSwitcher.SwitchState<PatrollingState>();
         }
 
