@@ -16,14 +16,11 @@ namespace Assets.Scripts.PlayerScripts
 
         private bool _canShoot = true;
         private float _timeToNextShoot;
-        private float _currentTime;
         
         public void Initialize()
         {
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
-            _currentTime = 0;
             Shoot += OnShoot;
-            print(_config.distance);
         }
 
         private void OnShoot(PlayerStateData data)
@@ -34,10 +31,7 @@ namespace Assets.Scripts.PlayerScripts
             Attack();
             _canShoot = false;
             data.Ammo -= 1;
-            if (data.Ammo <= 0)
-                StartCoroutine(Reload(data));
-            else
-                StartCoroutine(CalculateTimeToNextShoot());
+            StartCoroutine(data.Ammo <= 0 ? Reload(data) : CalculateTimeToNextShoot());
         }
 
         private void Attack()
@@ -47,18 +41,15 @@ namespace Assets.Scripts.PlayerScripts
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    print("HIT");
                     damagable.TakeDamage(_config.damage);
-                    return;
                 }
-                print("AAAAA");
-                _missParticle.transform.position = hit.transform.position;
+                _missParticle.transform.position = hit.point;
+                _missParticle.transform.rotation = Quaternion.LookRotation(hit.normal);
+                print(hit.point);
+
                 _missParticle.Play();
                 return;
             }
-            print("Miss");
-
-
         }
 
         private IEnumerator Reload(PlayerStateData data)

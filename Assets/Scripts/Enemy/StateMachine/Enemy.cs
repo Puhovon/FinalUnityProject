@@ -21,6 +21,7 @@ namespace Assets.Scripts.Enemy.StateMachine
         [SerializeField] private Transform[] _patrollingPoints;
 
         private EnemyStateMachine _stateMachine;
+        public Transform Transform => transform;
 
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
         public EnemyView View => _view;
@@ -61,6 +62,5 @@ namespace Assets.Scripts.Enemy.StateMachine
             Gizmos.DrawSphere(transform.position, _config.AttackConfig.DistanceToAttack);
         }
 
-        public Transform Transform { get; }
     }
 }

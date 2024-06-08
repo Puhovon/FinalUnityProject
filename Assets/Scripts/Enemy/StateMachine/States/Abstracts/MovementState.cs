@@ -28,7 +28,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States.Abstracts
 
         public virtual void Enter()
         {
-            Debug.Log(GetType());
 
         }
 
