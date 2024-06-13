@@ -10,6 +10,19 @@ namespace Assets.Scripts.Global
         
         [SerializeField] private int _health;
 
+        [SerializeField] private int _damageReduction;
+
+        public int DamageReduction
+        {
+            get => _damageReduction;
+            set => _damageReduction = value;
+        }
+        public int HealthPoints
+        {
+            get => _health;
+            set => _health = value;
+        }
+
         public event Action HealthChanged;
         public event Action Die;
 
@@ -22,13 +35,10 @@ namespace Assets.Scripts.Global
         {
             if (damage <= 0)
                 throw new ArgumentOutOfRangeException("damage must be greater than 0");
-            _health -= damage;
+            _health -= (damage - _damageReduction);
             HealthChanged?.Invoke();
             if (_health <= 0)
                 Die?.Invoke();
-            Debug.Log($"I {transform.name} have damage: {damage}");
         }
-
-        
     }
 }

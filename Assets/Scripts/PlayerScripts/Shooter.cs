@@ -10,13 +10,20 @@ namespace Assets.Scripts.PlayerScripts
     public class Shooter : MonoBehaviour
     {
         [SerializeField] private PlayerConfig _config;
-        [SerializeField] private int ammo;
+        [SerializeField] private int _ammo;
         [SerializeField] private ParticleSystem _missParticle;
-        public Action<PlayerStateData> Shoot;
-
-        private bool _canShoot = true;
+        private int _damageMagnifier = 0;
         private float _timeToNextShoot;
-        
+        private bool _canShoot = true;
+
+        public Action<PlayerStateData> Shoot;
+         
+        public int DamageMagnifier
+        {
+            get => _damageMagnifier;
+            set => _damageMagnifier = value;
+        }
+
         public void Initialize()
         {
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
@@ -25,7 +32,7 @@ namespace Assets.Scripts.PlayerScripts
 
         private void OnShoot(PlayerStateData data)
         {
-            ammo = data.Ammo;
+            _ammo = data.Ammo;
             if (!_canShoot)
                 return;
             Attack();
@@ -41,11 +48,10 @@ namespace Assets.Scripts.PlayerScripts
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.TakeDamage(_config.damage);
+                    damagable.TakeDamage(_config.damage + _damageMagnifier);
                 }
                 _missParticle.transform.position = hit.point;
                 _missParticle.transform.rotation = Quaternion.LookRotation(hit.normal);
-                print(hit.point);
 
                 _missParticle.Play();
                 return;
