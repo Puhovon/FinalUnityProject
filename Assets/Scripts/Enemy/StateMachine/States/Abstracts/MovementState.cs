@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions;
+using Assets.Scripts.Utilities;
 using UnityEngine;
 using Utilities;
 
@@ -12,19 +13,21 @@ namespace Assets.Scripts.Enemy.StateMachine.States.Abstracts
 
         private readonly Enemy _enemy;
         private readonly Transform _playerTransform;
+        private readonly RandomPointToMove _randomPointToMove;
 
-        public MovementState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, Transform playerTransform, SearchAround searchAround)
+        public MovementState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, SearchAround searchAround, RandomPointToMove randomMove)
         {
             StateSwitcher = stateSwitcher;
             SearchAround = searchAround;
             _enemy = enemy;
-            _playerTransform = playerTransform;
             Data = data;
+            _randomPointToMove = randomMove;
         }
 
         protected EnemyView View => _enemy.View;
-        protected Transform PlayerTransform => _playerTransform;
         protected Enemy Enemy => _enemy;
+
+        protected RandomPointToMove RandomPointToMove => _randomPointToMove;
 
         public virtual void Enter()
         {

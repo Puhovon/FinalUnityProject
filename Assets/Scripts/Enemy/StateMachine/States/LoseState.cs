@@ -43,8 +43,8 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             StateSwitcher.SwitchState<PatrollingState>();
         }
 
-        public LoseState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, Transform playerTransform,
+        public LoseState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy,
             SearchAround searchAround)
-            : base(stateSwitcher, data, enemy, playerTransform, searchAround) => _enemy = enemy;
+            : base(stateSwitcher, data, enemy, searchAround) => _enemy = enemy;
     }
 }

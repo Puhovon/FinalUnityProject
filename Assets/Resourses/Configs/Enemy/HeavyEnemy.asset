@@ -16,6 +16,7 @@ MonoBehaviour:
     Speed: 3
     DistanceToDetect: 5
     ChillTime: 2
+    MaxDistanceToMove: 10
   _detectedConfig:
     Speed: 1
     TimeToLosePlayer: 2

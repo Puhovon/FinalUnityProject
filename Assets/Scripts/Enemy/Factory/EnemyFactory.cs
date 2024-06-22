@@ -1,30 +1,23 @@
-using System;
 using UnityEngine;
 
 public class EnemyFactory
 {
-    private EnemyConfigs _heavyMelly;
-    private EnemyConfigs _smallMelly;
-    private EnemyConfigs _range;
+    private GameObject _heavyMelly;
+    private GameObject _smallMelly;
+    private GameObject _range;
 
-    public EnemyFactory(EnemyConfigs heavyMelly, EnemyConfigs smallMelly, EnemyConfigs range)
+    public EnemyFactory(GameObject heavyMelly, GameObject smallMelly, GameObject range)
     {
         _heavyMelly = heavyMelly;
         _smallMelly = smallMelly;
         _range = range;
     }
 
-    public EnemyConfigs GetConfig(EnemyType type)
+    public GameObject Spawn(EnemyType type, Transform transform) => type switch
     {
-        switch (type)
-        {
-            case EnemyType.HeavyMelly:
-                return _heavyMelly;
-            case EnemyType.LiteMelly
-                : return _smallMelly;
-            case EnemyType.Range
-                : return _range;
-            default: throw new ArgumentNullException(nameof(type));
-        }
-    }
+        EnemyType.Range => GameObject.Instantiate(_range, transform.position, Quaternion.identity),
+        EnemyType.HeavyMelly => GameObject.Instantiate(_heavyMelly, transform.position, Quaternion.identity),
+        EnemyType.LiteMelly => GameObject.Instantiate(_smallMelly, transform.position, Quaternion.identity),
+        _ => null,
+    };
 }

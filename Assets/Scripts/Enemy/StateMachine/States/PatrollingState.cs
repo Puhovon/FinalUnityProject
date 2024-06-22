@@ -2,6 +2,7 @@
 using System.Linq;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.Enemy.StateMachine.States.Abstracts;
+using Assets.Scripts.Utilities;
 using UnityEngine;
 using Utilities;
 
@@ -10,14 +11,14 @@ namespace Assets.Scripts.Enemy.StateMachine.States
     internal class PatrollingState : MovementState
     {
         private readonly SearchAround _searchAround;
-        private int _currentPoint = 0;
         private bool _isChilling = false;
 
         public override void Enter()
         {
             base.Enter();
             View.RunningStart();
-            Enemy.NavMeshAgent.destination = (Data.PatrollingPoints[_currentPoint].position);
+            Data.PatrollingPoint = RandomPointToMove.GetRandomPoint();
+            Enemy.NavMeshAgent.destination = Data.PatrollingPoint;
         }
 
         public override void Exit()
@@ -34,12 +35,9 @@ namespace Assets.Scripts.Enemy.StateMachine.States
 
         private void IsCharacterOnPatrolPoint()
         {
-            if ((Data.PatrollingPoints[_currentPoint].position - Enemy.transform.position).magnitude < 0.1f && !_isChilling)
+            if ((Data.PatrollingPoint - Enemy.transform.position).magnitude < 0.1f && !_isChilling)
             {
-                if (_currentPoint == Data.PatrollingPoints.Length - 1)
-                    _currentPoint = 0;
-                else
-                    _currentPoint++;
+                Data.PatrollingPoint = RandomPointToMove.GetRandomPoint();
                 Enemy.StartCoroutine(Chill());
             }
         }
@@ -59,25 +57,25 @@ namespace Assets.Scripts.Enemy.StateMachine.States
 
             //View.RunningStop();
             //View.ChillingStart();
-            
+
             for (int i = 0; i < Data.ChillTime; i++)
             {
                 yield return new WaitForSeconds(1);
             }
-            
+
             //View.ChillingStop();
             //View.RunningStart();
-            
+
             _isChilling = false;
-            Enemy.NavMeshAgent.destination = Data.PatrollingPoints[_currentPoint].position;
+            Enemy.NavMeshAgent.destination = Data.PatrollingPoint;
         }
 
         public PatrollingState(IStateSwitcher stateSwitcher,
             EnemyStateData data,
             Enemy enemy,
-            Transform playerTransform,
-            SearchAround searchAround)
-            : base(stateSwitcher, data, enemy, playerTransform, searchAround)
+            SearchAround searchAround,
+            RandomPointToMove randomMove)
+            : base(stateSwitcher, data, enemy, searchAround, randomMove)
         {
             _searchAround = searchAround;
         }

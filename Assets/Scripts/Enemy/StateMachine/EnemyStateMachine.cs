@@ -3,30 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Enemy.StateMachine.States;
 using Assets.Scripts.PlayerScripts;
+using Assets.Scripts.Utilities;
 using UnityEngine;
+using UnityEngine.AI;
 using Utilities;
 
 namespace Assets.Scripts.Enemy.StateMachine
 {
     public class EnemyStateMachine : IStateSwitcher
     {
-        private Shooter _shooter;
         private List<IState> _states;
         private IState _currentState;
-        private Transform _playerTransform;
 
-        public EnemyStateMachine(Enemy enemy, Shooter shooter, EnemyConfigs config, Transform playerTransform,
-            EnemyStateData enemyStateData)
+        public EnemyStateMachine(Enemy enemy, EnemyConfigs config,
+            EnemyStateData enemyStateData, NavMeshAgent agent)
         {
-            _shooter = shooter;
-            _playerTransform = playerTransform;
-            
             SearchAround searchAround = new SearchAround(enemy.transform, config.PatrollingConfig.DistanceToDetect);
+            RandomPointToMove randomPointToMove =
+                new RandomPointToMove(agent, enemy.Transform, config.PatrollingConfig.MaxDistanceToMove);
             _states = new List<IState>()
             {
-                new PatrollingState(this, enemyStateData, enemy, playerTransform, searchAround),
-                new AttackState(this, enemyStateData, enemy, _playerTransform, searchAround),
-                new LoseState(this, enemyStateData, enemy, playerTransform, searchAround),
+                new PatrollingState(this, enemyStateData, enemy, searchAround, randomPointToMove),
+                new AttackState(this, enemyStateData, enemy, searchAround),
+                new LoseState(this, enemyStateData, enemy, searchAround),
             };
             _currentState = _states[0];
             _currentState.Enter();

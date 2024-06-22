@@ -10,9 +10,6 @@ namespace Assets.Scripts.Enemy.StateMachine
         private float _speed;
         private float _chillTime;
 
-        private Transform[] _patrollingPoints;
-
-
         public float ChillTime
         {
             get => _chillTime;
@@ -24,16 +21,7 @@ namespace Assets.Scripts.Enemy.StateMachine
             }
         }
 
-        public Transform[] PatrollingPoints
-        {
-            get => _patrollingPoints;
-            set
-            {
-                if (value.Length <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-                _patrollingPoints = value;
-            }
-        }
+        public Vector3 PatrollingPoint { get; set; }
 
         public float Speed
         {
@@ -46,11 +34,10 @@ namespace Assets.Scripts.Enemy.StateMachine
             }
         }
 
-        public EnemyStateData(float speed, float chillTime, Transform[] patrollingPoints)
+        public EnemyStateData(float speed, float chillTime)
         {
             _speed = speed;
             _chillTime = chillTime;
-            _patrollingPoints = patrollingPoints;
         }
     }
 }

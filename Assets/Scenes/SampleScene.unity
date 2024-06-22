@@ -133,13 +133,14 @@ GameObject:
   m_Component:
   - component: {fileID: 157715418}
   - component: {fileID: 157715417}
+  - component: {fileID: 157715419}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &157715417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 0}
+  - {fileID: 157715419}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -187,6 +188,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157715419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157715416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3ddfe04891bccb40825953ae4f2b83c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 1942261173}
 --- !u!1001 &176585496
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -600,6 +614,72 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!1 &525768965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 525768966}
+  - component: {fileID: 525768968}
+  - component: {fileID: 525768967}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &525768966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525768965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.7, y: 0, z: 9.82}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &525768967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525768965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6acf9d5af7d87334dad26fa7ae98f596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _heavyMelly: {fileID: 5159076049694781904, guid: d75a21072c7fcf349bdeaaccac010bbe,
+    type: 3}
+  _smallMelly: {fileID: 0}
+  _range: {fileID: 3394126817757564481, guid: 4bcaba487d9c6d4498fa8beabe0f3eaa, type: 3}
+  _levelConfig: {fileID: 11400000, guid: 235ca18114616284cba45f32126b49ab, type: 2}
+  _wave: {fileID: 525768968}
+  spawnPoint: {fileID: 525768966}
+--- !u!114 &525768968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525768965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1026c0e3cbf044f4e8bc8bc4cd05f70c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeToNextWave: 60
+  _currentTime: 0
 --- !u!1 &570812850
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +773,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HeavyEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541754002163558908, guid: 7258be90cb808ef43b9aee4dd2990d0f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4496518271799481685, guid: 7258be90cb808ef43b9aee4dd2990d0f,
         type: 3}
@@ -814,6 +899,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RangeEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541754002163558908, guid: 0ef8a9fa715b1a946969a380afbb8695,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4496518271799481685, guid: 0ef8a9fa715b1a946969a380afbb8695,
         type: 3}
@@ -6556,3 +6646,4 @@ SceneRoots:
   - {fileID: 176585496}
   - {fileID: 587171112}
   - {fileID: 814848620}
+  - {fileID: 525768966}

@@ -15,8 +15,8 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         private bool _canAttack = true;
         private bool _seePlayer;
 
-        public AttackState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, Transform playerTransform, SearchAround searchAround)
-            : base(stateSwitcher, data, enemy, playerTransform, searchAround)
+        public AttackState(IStateSwitcher stateSwitcher, EnemyStateData data, Enemy enemy, SearchAround searchAround)
+            : base(stateSwitcher, data, enemy, searchAround)
         {
             _enemy = enemy;
             _config = enemy.Config.AttackConfig;
@@ -48,13 +48,13 @@ namespace Assets.Scripts.Enemy.StateMachine.States
 
         private void IsCanAttack(IEntity finded)
         {
-            if ((_enemy.transform.position - PlayerTransform.position).magnitude <= _config.DistanceToAttack) {
+            if ((_enemy.transform.position - finded.Transform.position).magnitude <= _config.DistanceToAttack) {
                 _enemy.NavMeshAgent.isStopped = true;
                 Attack(finded);
             } else
             {
                 _enemy.NavMeshAgent.isStopped = false;
-                _enemy.NavMeshAgent.destination = (PlayerTransform.position);
+                _enemy.NavMeshAgent.destination = (finded.Transform.position);
             }
         }
 

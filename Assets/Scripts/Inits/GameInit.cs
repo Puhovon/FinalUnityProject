@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public class GameInit : MonoBehaviour
+public class GameInit : MonoInstaller
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Transform playerTransform;
 
-    // Update is called once per frame
-    void Update()
+    public override void InstallBindings()
     {
-        
+        Container.Bind<Transform>().FromInstance(playerTransform).AsSingle().NonLazy();
     }
 }
