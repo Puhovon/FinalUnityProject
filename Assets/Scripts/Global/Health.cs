@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Global
 {
-    public class Health : MonoBehaviour, IDamagable
+    public class Health : MonoBehaviour, IDamagable, IBufuble
     {
         [SerializeField] private GlobalConfig _config;
         
@@ -41,4 +41,19 @@ namespace Assets.Scripts.Global
                 Die?.Invoke();
         }
     }
+
+    public interface IBufuble
+    {
+        public int DamageReduction
+        {
+            get;
+            set;
+        }
+        public int HealthPoints
+        {
+            get;
+            set;
+        }
+    }
+
 }

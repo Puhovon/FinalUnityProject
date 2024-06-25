@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 
@@ -19,7 +18,6 @@ namespace Assets.Scripts.Enemy.StateMachine
         [SerializeField] private EnemyView _view;
 
         private EnemyStateMachine _stateMachine;
-        private Transform _playerTransform;
         public Transform Transform => transform;
 
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
@@ -31,12 +29,6 @@ namespace Assets.Scripts.Enemy.StateMachine
             _view.Initialize();
             InitializeDeps();
             _navMeshAgent.speed = _config.PatrollingConfig.Speed;
-        }
-
-        [Inject]
-        public void Constructor(Transform playerTransform)
-        {
-            _playerTransform = playerTransform;
         }
 
         private void InitializeDeps()

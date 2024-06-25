@@ -21,4 +21,4 @@ MonoBehaviour:
   _reloadingStateConfig:
     <TimeToReload>k__BackingField: 5
   distance: 1000
-  damage: 10
+  damage: 50

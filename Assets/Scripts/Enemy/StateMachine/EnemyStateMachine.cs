@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Enemy.StateMachine.States;
-using Assets.Scripts.PlayerScripts;
 using Assets.Scripts.Utilities;
-using UnityEngine;
 using UnityEngine.AI;
 using Utilities;
 
