@@ -1,6 +1,7 @@
+using Fusion;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraFollow : NetworkBehaviour
 {
     [SerializeField] private Transform player;
 
@@ -11,8 +12,10 @@ public class CameraFollow : MonoBehaviour
         offset = transform.position - player.position;
     }
 
-    private void Update()
+    public override void FixedUpdateNetwork()
     {
+        if (!Object.HasInputAuthority)
+            return;
         transform.position = player.position + offset;
     }
 }

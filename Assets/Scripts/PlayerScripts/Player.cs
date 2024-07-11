@@ -1,22 +1,22 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
 {
-    [RequireComponent(typeof(CharacterController))]
-    public class Player : MonoBehaviour, IEntity
+    public class Player : NetworkBehaviour, IEntity
     {
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private PlayerView _view;
         [SerializeField] private Shooter _shooter;
         private MainInputActions _input;
         private PlayerStateMachine _stateMachine;
-        private CharacterController _controller;
+        private NetworkCharacterController _controller;
 
         public MainInputActions Input => _input;
-        public CharacterController CharacterController => _controller;
+        public NetworkCharacterController CharacterController => _controller;
         public PlayerConfig Config => _config;
         
         public PlayerView View => _view;
@@ -28,14 +28,17 @@ namespace Assets.Scripts.PlayerScripts
             _view.Initialize();
             _shooter.Initialize();
             _input = new MainInputActions();
-            _controller = GetComponent<CharacterController>();
+            _controller = GetComponent<NetworkCharacterController>();
             _stateMachine = new PlayerStateMachine(this, _shooter, _config);
         }
-        
-        private void Update()
+
+        public override void FixedUpdateNetwork()
         {
-            _stateMachine.HandleInput();
-            _stateMachine.Update();
+            if (Object.HasInputAuthority)
+            {
+                _stateMachine.HandleInput();
+                _stateMachine.Update();
+            }
         }
 
         private void OnEnable() => _input.Enable();

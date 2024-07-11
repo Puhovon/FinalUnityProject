@@ -15,6 +15,7 @@ namespace Assets.Scripts.PlayerScripts.StateMachine
         public PlayerStateMachine(Player player, Shooter shooter, PlayerConfig config)
         {
             PlayerStateData data = new PlayerStateData(config.WalkingStateConfig.MaxAmmo);
+            
             _shooter = shooter;
             _states = new List<IState>()
             {

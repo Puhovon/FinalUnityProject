@@ -633,10 +633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6acf9d5af7d87334dad26fa7ae98f596, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _heavyMelly: {fileID: 5159076049694781904, guid: d75a21072c7fcf349bdeaaccac010bbe,
-    type: 3}
-  _smallMelly: {fileID: 0}
-  _range: {fileID: 3394126817757564481, guid: 4bcaba487d9c6d4498fa8beabe0f3eaa, type: 3}
   _levelConfig: {fileID: 11400000, guid: 235ca18114616284cba45f32126b49ab, type: 2}
   _wave: {fileID: 525768968}
   spawnPoint: {fileID: 525768966}

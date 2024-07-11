@@ -1,16 +1,19 @@
-﻿using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using Fusion;
+using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
 {
-    public class PlayerRotation : MonoBehaviour
+    public class PlayerRotation : NetworkBehaviour
     {
         [SerializeField] private Player _player;
         [SerializeField] private Camera _camera;
         float rotationFactorPerFrame = 15.0f;
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
+            if (!Object.HasInputAuthority)
+                return;
+
             Vector2 mousePosition = _player.Input.Movement.MousePosition.ReadValue<Vector2>();
             Ray ray = _camera.ScreenPointToRay(new Vector3(mousePosition.x, mousePosition.y, 0));
 
@@ -23,6 +26,7 @@ namespace Assets.Scripts.PlayerScripts
                 Vector3 direction = (point - transform.position).normalized;
 
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+                print(lookRotation);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
             }
         }

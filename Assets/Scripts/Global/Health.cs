@@ -41,19 +41,4 @@ namespace Assets.Scripts.Global
                 Die?.Invoke();
         }
     }
-
-    public interface IBufuble
-    {
-        public int DamageReduction
-        {
-            get;
-            set;
-        }
-        public int HealthPoints
-        {
-            get;
-            set;
-        }
-    }
-
 }

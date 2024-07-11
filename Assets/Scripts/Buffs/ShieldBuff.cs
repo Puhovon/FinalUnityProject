@@ -18,10 +18,7 @@ namespace Assets.Scripts.Buffs
 
         private void Start()
         {
-            if(_bufuble is null)
-                print("NULLL");
             _timer = new CoroutineTimer(_timeToEnd, EndBuff);
-            print($"{GetType()} is Initialized");
         }
 
         private void OnTriggerEnter(Collider other) 

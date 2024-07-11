@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
-using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts.StateMachine.States
 {
@@ -17,6 +16,8 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Enter()
         {
+            if (!Player.Object.HasInputAuthority)
+                return;
             base.Enter();
             View.RunningStart();
             Data.Speed = _config.Speed;
@@ -24,6 +25,8 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Exit()
         {
+            if (!Player.Object.HasInputAuthority)
+                return;
             base.Exit();
             View.RunningStop();
 

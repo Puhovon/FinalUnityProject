@@ -17,8 +17,6 @@ namespace Assets.Scripts.Buffs
 
         private void Start()
         {
-            if (_bufuble is null)
-                print("NULLL");
             _timer = new CoroutineTimer(_timeToEnd, EndBuff);
         }
 
@@ -42,9 +40,8 @@ namespace Assets.Scripts.Buffs
             if (_bufuble.HealthPoints - _healthToAdd <= 0)
             {
                 _bufuble.HealthPoints = 1;
-                return;
-            }
-            _bufuble.HealthPoints -= _healthToAdd;
+            } else 
+                _bufuble.HealthPoints -= _healthToAdd;
             Destroy(gameObject);
         }
     }

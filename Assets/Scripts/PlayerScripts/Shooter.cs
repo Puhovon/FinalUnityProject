@@ -3,11 +3,12 @@ using System.Collections;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
 {
-    public class Shooter : MonoBehaviour
+    public class Shooter : NetworkBehaviour
     {
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private int _ammo;

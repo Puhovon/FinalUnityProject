@@ -32,36 +32,33 @@ namespace Assets.Scripts.Enemy.EnemySpawner
             _currentWaveLite = _levelConfig.LiteWaveConfig.StartCount;
             _currentWaveRange = _levelConfig.RangeWaveConfig.StartCount;
             _wave.SpawnNewWave += Spawn;
-            print(_factory is null);
         }
 
         private void Spawn()
         {
-            StartCoroutine(SpawnEnemyByType(_currentWaveHeavy, EnemyType.HeavyMelly, SpawnHeavy));
+            StartCoroutine(SpawnEnemyByType(_currentWaveHeavy, EnemyType.HeavyMelly, IncrementHeavyCount));
+            //StartCoroutine(SpawnEnemyByType(_currentWaveLite, EnemyType.HeavyMelly, SpawnRange));
             //StartCoroutine(SpawnEnemyByType(_currentWaveRange, EnemyType.Range, SpawnRange));
-            //StartCoroutine(SpawnEnemyByType(_currentWaveHeavy, EnemyType.HeavyMelly, SpawnRange));
         }
 
         private IEnumerator SpawnEnemyByType(int currentLength,EnemyType type, Action a)
         {
-            Debug.Log(_currentWaveRange);
             for (int i = 0; i < currentLength; i++)
             {
                 _factory.Spawn(type, transform);
                 yield return new WaitForSeconds(0.5f);
             }
-
             a();
         }
 
-        private void SpawnRange() {
+        private void IncrementRangeCount() {
             _currentWaveRange += _levelConfig.RangeWaveConfig.WaveMagnifier;
         }        
-        private void SpawnHeavy()
+        private void IncrementHeavyCount()
         {
             _currentWaveHeavy += _levelConfig.HeavyWaveConfig.WaveMagnifier;
         }
-        private void SpawnLite()
+        private void IncrementLiteCount()
         {
             _currentWaveLite += _levelConfig.LiteWaveConfig.WaveMagnifier;
         }

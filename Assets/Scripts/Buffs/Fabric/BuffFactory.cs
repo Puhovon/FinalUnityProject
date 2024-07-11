@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -18,8 +17,8 @@ namespace Assets.Scripts.Buffs.Fabric
             _instantiator = instantiator;
             Load();
         }
-        
-        public void GetRandomBuff( Vector3 pos)
+
+        public void GetRandomBuff(Vector3 pos)
         {
             var index = Random.Range(0, _buffs.Length);
             _instantiator.InstantiatePrefab(_buffs[index], pos, Quaternion.identity, null);

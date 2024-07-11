@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions;
+using Fusion;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -21,21 +22,18 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         protected Shooter Shooter => _shooter;
         protected MainInputActions Input => _player.Input;
-        protected CharacterController CharacterController => _player.CharacterController;
+        protected NetworkCharacterController CharacterController => _player.CharacterController;
         protected PlayerView View => _player.View;
+        protected Player Player => _player;
         
-        public virtual void Enter()
-        {
+        public virtual void Enter() { }
 
-        }
-
-        public virtual void Exit()
-        {
-        }
+        public virtual void Exit() { }
 
         public virtual void Update()
         {
             Vector3 velocity = GetConvertedVelocity();
+            Debug.LogWarning(_player.Transform.rotation);
             CharacterController.Move(velocity * Time.deltaTime);
         }
 
@@ -43,6 +41,8 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public void HandleInput()
         {
+            if (!Player.Object.HasInputAuthority)
+                return;
             Data.InputValue = ReadInput();
             Data.Velocity = Data.InputValue * Data.Speed;
         }

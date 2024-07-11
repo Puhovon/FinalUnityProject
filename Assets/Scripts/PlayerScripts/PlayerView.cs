@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
 {
     [RequireComponent(typeof(Animator))]
-    public class PlayerView : MonoBehaviour
+    public class PlayerView : NetworkBehaviour
     {
         private const string isIdling = "IsIdling";
         private const string isRunning = "IsRunning";

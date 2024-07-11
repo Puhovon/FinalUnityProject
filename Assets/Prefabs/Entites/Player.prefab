@@ -61,7 +61,7 @@ PrefabInstance:
     - target: {fileID: 3541754002163558908, guid: bd6ee82c5e06b3f4f86113cbf8261ae1,
         type: 3}
       propertyPath: m_Name
-      value: Player Variant
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6549017136547811340, guid: bd6ee82c5e06b3f4f86113cbf8261ae1,
         type: 3}
@@ -118,6 +118,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6239141874254010408}
+    - targetCorrespondingSourceObject: {fileID: 3541754002163558908, guid: bd6ee82c5e06b3f4f86113cbf8261ae1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8065506303501626717}
   m_SourcePrefab: {fileID: 100100000, guid: bd6ee82c5e06b3f4f86113cbf8261ae1, type: 3}
 --- !u!1 &4118866323252094027 stripped
 GameObject:
@@ -200,7 +204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: f609bb13b26a49d438fdc819a703c69e, type: 2}
-  ammo: 0
+  _ammo: 0
   _missParticle: {fileID: 0}
 --- !u!114 &6144080256787294625
 MonoBehaviour:
@@ -216,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: 91966aeb0d2c2d04ba7cfa11ec8e88bc, type: 2}
   _health: 0
+  _damageReduction: 0
 --- !u!114 &2939255064954821118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,3 +249,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 2656219132621176822}
   _camera: {fileID: 0}
+--- !u!114 &-8065506303501626717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118866323252094027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 895784166
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 4116064674421581943}
+  - {fileID: 2656219132621176822}
+  - {fileID: 1566295481423996577}
+  - {fileID: 6239141874254010408}
