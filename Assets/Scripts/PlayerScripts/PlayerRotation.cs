@@ -7,10 +7,12 @@ namespace Assets.Scripts.PlayerScripts
     {
         [SerializeField] private Player _player;
         [SerializeField] private Camera _camera;
+        [SerializeField] NetworkCharacterController _cc;
+        
         float rotationFactorPerFrame = 15.0f;
-
         public override void FixedUpdateNetwork()
         {
+            
             if (!Object.HasInputAuthority)
                 return;
 
@@ -27,7 +29,8 @@ namespace Assets.Scripts.PlayerScripts
 
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
                 print(lookRotation);
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+                _cc.transform.rotation =
+                    Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
             }
         }
     }
