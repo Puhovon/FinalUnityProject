@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts.StateMachine
@@ -6,6 +7,7 @@ namespace Assets.Scripts.PlayerScripts.StateMachine
     public class PlayerStateData
     {
         public Vector2 Velocity;
+        public float3 Quanternion;
 
         private float _speed;
         private Vector2 _input;

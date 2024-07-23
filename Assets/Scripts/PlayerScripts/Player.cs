@@ -22,6 +22,7 @@ namespace Assets.Scripts.PlayerScripts
         public PlayerView View => _view;
 
         public Transform Transform => transform;
+        public PlayerStateMachine StateMachine => _stateMachine;
 
         private void Awake()
         {
@@ -37,8 +38,8 @@ namespace Assets.Scripts.PlayerScripts
             if (Object.HasInputAuthority)
             {
                 _stateMachine.HandleInput();
-                _stateMachine.Update();
             }
+            _stateMachine.Update();
         }
 
         private void OnEnable() => _input.Enable();

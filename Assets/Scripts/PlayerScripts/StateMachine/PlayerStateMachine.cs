@@ -11,16 +11,17 @@ namespace Assets.Scripts.PlayerScripts.StateMachine
         private Shooter _shooter;
         private List<IState> _states;
         private IState _currentState;
-        
+        public PlayerStateData StateData { get; private set; }
+
         public PlayerStateMachine(Player player, Shooter shooter, PlayerConfig config)
         {
-            PlayerStateData data = new PlayerStateData(config.WalkingStateConfig.MaxAmmo);
+            StateData = new PlayerStateData(config.WalkingStateConfig.MaxAmmo);
             
             _shooter = shooter;
             _states = new List<IState>()
             {
-                new IdlingState(this, data, player, _shooter),
-                new WalkingState(this, data, player, _shooter),
+                new IdlingState(this, StateData, player, _shooter),
+                new WalkingState(this, StateData, player, _shooter),
             };
             _currentState = _states[0];
             _currentState.Enter();

@@ -32,8 +32,12 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public virtual void Update()
         {
+            if(IsInputZero())
+                return;
             Vector3 velocity = GetConvertedVelocity();
-            Debug.LogWarning(_player.Transform.rotation);
+            Vector3 dir = Data.Quanternion;
+            dir.Normalize();
+            
             CharacterController.Move(velocity * Time.deltaTime);
         }
 

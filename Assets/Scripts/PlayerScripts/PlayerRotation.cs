@@ -28,9 +28,7 @@ namespace Assets.Scripts.PlayerScripts
                 Vector3 direction = (point - transform.position).normalized;
 
                 Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                print(lookRotation);
-                _cc.transform.rotation =
-                    Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 10f);
+                _player.Transform.rotation = lookRotation;
             }
         }
     }
