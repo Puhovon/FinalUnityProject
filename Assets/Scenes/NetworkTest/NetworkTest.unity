@@ -661,6 +661,7 @@ MonoBehaviour:
   _levelConfig: {fileID: 11400000, guid: 235ca18114616284cba45f32126b49ab, type: 2}
   _wave: {fileID: 1778817587}
   spawnPoint: {fileID: 1778817588}
+  _currentWaveHeavy: 0
 --- !u!114 &1778817587
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,7 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1026c0e3cbf044f4e8bc8bc4cd05f70c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToNextWave: 60
+  _timeToNextWave: 20
   _currentTime: 0
 --- !u!4 &1778817588
 Transform:
