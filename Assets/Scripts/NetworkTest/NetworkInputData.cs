@@ -5,7 +5,7 @@ namespace Assets.Scripts.NetworkTest
 {
     public struct NetworkInputData : INetworkInput
     {
-        public Vector2 movement;
+        public Vector3 movement;
         
     }
 }

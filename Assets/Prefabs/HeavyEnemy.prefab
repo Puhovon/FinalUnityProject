@@ -1919,6 +1919,7 @@ GameObject:
   - component: {fileID: 5527160565275763044}
   - component: {fileID: -8254222771291808366}
   - component: {fileID: 4929518008250487770}
+  - component: {fileID: -3422352510295334870}
   m_Layer: 0
   m_Name: HeavyEnemy
   m_TagString: Untagged
@@ -1980,7 +1981,6 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: ca6cc42a14a975b4485c0763817abedb, type: 2}
   _type: 0
   _view: {fileID: 0}
-  _patrollingPoints: []
 --- !u!114 &264347248562533244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2053,6 +2053,23 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: bc19afbc1e1cf9342a24ffd4bc14a069, type: 2}
   _health: 0
   _damageReduction: 0
+--- !u!114 &-3422352510295334870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541754002163558908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1944765145
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
 --- !u!1 &3921334144448749991
 GameObject:
   m_ObjectHideFlags: 0

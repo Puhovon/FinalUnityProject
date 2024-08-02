@@ -45,7 +45,7 @@ namespace Assets.Scripts.PlayerScripts
         private void Attack()
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, _config.distance))
+            if (Runner.GetPhysicsScene().Raycast(transform.position, transform.forward, out hit, _config.distance))
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {

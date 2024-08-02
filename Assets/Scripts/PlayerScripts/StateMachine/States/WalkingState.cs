@@ -16,8 +16,6 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Enter()
         {
-            if (!Player.Object.HasInputAuthority)
-                return;
             base.Enter();
             View.RunningStart();
             Data.Speed = _config.Speed;
@@ -25,7 +23,7 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Exit()
         {
-            if (!Player.Object.HasInputAuthority)
+            if (!Player.Object.HasStateAuthority)
                 return;
             base.Exit();
             View.RunningStop();

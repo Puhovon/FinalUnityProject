@@ -17,15 +17,14 @@ namespace Assets.Scripts.Enemy
             _health.Die += Die;
         }
 
-        [Inject]
-        public void Construct(BuffFactory factory)
-        {
-            _factory = factory;
-        }
+        // [Inject]
+        // public void Construct(BuffFactory factory)
+        // {
+        //     _factory = factory;
+        // }
 
         private void Die()
         {
-            _factory.GetRandomBuff(transform.position);
             _health.Die -= Die;
             Destroy(gameObject);
         }

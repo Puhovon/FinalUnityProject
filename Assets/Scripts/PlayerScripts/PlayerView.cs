@@ -6,20 +6,59 @@ namespace Assets.Scripts.PlayerScripts
     [RequireComponent(typeof(Animator))]
     public class PlayerView : NetworkBehaviour
     {
-        private const string isIdling = "IsIdling";
-        private const string isRunning = "IsRunning";
-        private Animator _animator;
-        
+        [SerializeField] private Animator _animator;
+
+        private const string IsIdling = "IsIdling";
+        private const string IsRunning = "IsRunning";
+
         public void Initialize()
         {
-            _animator = GetComponent<Animator>();
+            // _animator = GetComponent<Animator>();
         }
 
-        public void IdlingStop() => _animator.SetBool(isIdling, false);
-        public void IdlingStart() => _animator.SetBool(isIdling, true);
+        // [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void IdlingStop()
+        {
+            if (HasStateAuthority)
+            {
+                RPC_SetIdling(false);
+            }
+        }
 
-        public void RunningStart() => _animator.SetBool(isRunning, true);
-        public void RunningStop() => _animator.SetBool(isRunning, false);
+        public void IdlingStart()
+        {
+            if (HasStateAuthority)
+            {
+                RPC_SetIdling(true);
+            }
+        }
 
+        public void RunningStart()
+        {
+            if (HasStateAuthority)
+            {
+                RPC_SetRunning(true);
+            }
+        }
+
+        public void RunningStop()
+        {
+            if (HasStateAuthority)
+            {
+                RPC_SetRunning(false);
+            }
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_SetIdling(bool isIdling)
+        {
+            _animator.SetBool(IsIdling, isIdling);
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_SetRunning(bool isRunning)
+        {
+            _animator.SetBool(IsRunning, isRunning);
+        }
     }
 }

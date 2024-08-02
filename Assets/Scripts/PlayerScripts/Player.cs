@@ -13,10 +13,10 @@ namespace Assets.Scripts.PlayerScripts
         [SerializeField] private Shooter _shooter;
         private MainInputActions _input;
         private PlayerStateMachine _stateMachine;
-        private NetworkCharacterController _controller;
+        private CharacterController _controller;
 
         public MainInputActions Input => _input;
-        public NetworkCharacterController CharacterController => _controller;
+        public CharacterController CharacterController => _controller;
         public PlayerConfig Config => _config;
         
         public PlayerView View => _view;
@@ -29,13 +29,13 @@ namespace Assets.Scripts.PlayerScripts
             _view.Initialize();
             _shooter.Initialize();
             _input = new MainInputActions();
-            _controller = GetComponent<NetworkCharacterController>();
+            _controller = GetComponent<CharacterController>();
             _stateMachine = new PlayerStateMachine(this, _shooter, _config);
         }
 
         public override void FixedUpdateNetwork()
         {
-            if (Object.HasInputAuthority)
+            if (HasStateAuthority)
             {
                 _stateMachine.HandleInput();
             }

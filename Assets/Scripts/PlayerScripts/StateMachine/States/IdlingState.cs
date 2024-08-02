@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions;
+using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts.StateMachine.States
 {
@@ -22,9 +23,11 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Update()
         {
-            if (!Player.Object.HasInputAuthority)
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            if (!Player.Object.HasStateAuthority)
                 return;
             base.Update();
+            Debug.Log("-------------------------------------");
             if (isShooting())
                 Shooter.Shoot?.Invoke(Data);
             if (IsInputZero())

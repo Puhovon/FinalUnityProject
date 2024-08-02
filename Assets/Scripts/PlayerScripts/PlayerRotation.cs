@@ -7,7 +7,7 @@ namespace Assets.Scripts.PlayerScripts
     {
         [SerializeField] private Player _player;
         [SerializeField] private Camera _camera;
-        [SerializeField] NetworkCharacterController _cc;
+        [SerializeField] CharacterController _cc;
         
         float rotationFactorPerFrame = 15.0f;
         public override void FixedUpdateNetwork()

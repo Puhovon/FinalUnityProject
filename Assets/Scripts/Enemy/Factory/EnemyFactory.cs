@@ -1,4 +1,5 @@
 using System.IO;
+using Fusion;
 using UnityEngine;
 using Zenject;
 
@@ -21,13 +22,29 @@ public class EnemyFactory
         Load();
     }
 
-    public GameObject Spawn(EnemyType type, Transform transform) => type switch
+    public GameObject Spawn(EnemyType type, Transform transform)
     {
-        EnemyType.Range => _instantiator.InstantiatePrefab(_range, transform.position, Quaternion.identity, null),
-        EnemyType.HeavyMelly => _instantiator.InstantiatePrefab(_heavyMelly, transform.position, Quaternion.identity, null),
-        EnemyType.LiteMelly => _instantiator.InstantiatePrefab(_smallMelly, transform.position, Quaternion.identity, null),
-        _ => null,
-    };
+        GameObject prefab = type switch
+        {
+            EnemyType.Range => _range,
+            EnemyType.HeavyMelly => _heavyMelly,
+            EnemyType.LiteMelly => _smallMelly,
+            _ => null,
+        };
+
+        if (prefab == null)
+        {
+            Debug.LogError("Enemy prefab is null");
+            return null;
+        }
+        
+        if (prefab.GetComponent<NetworkObject>() == null)
+        {
+            Debug.LogError($"Prefab {prefab.name} does not have a NetworkObject component.");
+            return null;
+        }
+        return _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
+    }
 
     private void Load()
     {

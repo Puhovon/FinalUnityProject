@@ -7785,7 +7785,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2790153493354226288}
   - component: {fileID: 7006581490335709229}
-  - component: {fileID: 8822789585480560534}
   - component: {fileID: 2936834347494005560}
   - component: {fileID: 5605588744026158707}
   - component: {fileID: 4356377835212142063}
@@ -7794,6 +7793,8 @@ GameObject:
   - component: {fileID: 4961876874299590178}
   - component: {fileID: 5296641747523110942}
   - component: {fileID: 4731882136871466510}
+  - component: {fileID: 7546376154975461822}
+  - component: {fileID: 4736017413401396806}
   m_Layer: 0
   m_Name: Rig
   m_TagString: Untagged
@@ -7868,24 +7869,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8822789585480560534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5458796886761284070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gravity: -20
-  jumpImpulse: 8
-  acceleration: 10
-  braking: 10
-  maxSpeed: 2
-  rotationSpeed: 15
 --- !u!114 &2936834347494005560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7913,7 +7896,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Player
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -7931,7 +7914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 1511461316274197571}
   _camera: {fileID: 2677646412441454676}
-  _cc: {fileID: 8822789585480560534}
+  _cc: {fileID: 7006581490335709229}
 --- !u!114 &4356377835212142063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8009,6 +7992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f039c7c425473388827d6d617c0305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 4961876874299590178}
 --- !u!114 &4731882136871466510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8024,6 +8008,44 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: f609bb13b26a49d438fdc819a703c69e, type: 2}
   _ammo: 0
   _missParticle: {fileID: 5221826956920870989}
+--- !u!114 &7546376154975461822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458796886761284070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncScale: 0
+  SyncParent: 1
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
+--- !u!114 &4736017413401396806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5458796886761284070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 1040386718
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5605588744026158707}
+  - {fileID: 1511461316274197571}
+  - {fileID: 5296641747523110942}
+  - {fileID: 4731882136871466510}
+  - {fileID: 7546376154975461822}
 --- !u!1 &5472799801145629256
 GameObject:
   m_ObjectHideFlags: 0
@@ -8588,13 +8610,9 @@ MonoBehaviour:
   SortKey: 88426842
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 4736017413401396806}
   NetworkedBehaviours:
-  - {fileID: 8822789585480560534}
-  - {fileID: 5605588744026158707}
-  - {fileID: 1511461316274197571}
-  - {fileID: 5296641747523110942}
-  - {fileID: 4731882136871466510}
   - {fileID: 8307319030720795989}
 --- !u!1 &6481443653818070333
 GameObject:

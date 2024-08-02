@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions;
-using Fusion;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -18,17 +17,22 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
             _player = player;
             Data = data;
             _shooter = shooter;
+            Debug.Log("MovementState is constructing");
         }
 
         protected Shooter Shooter => _shooter;
         protected MainInputActions Input => _player.Input;
-        protected NetworkCharacterController CharacterController => _player.CharacterController;
+        protected CharacterController CharacterController => _player.CharacterController;
         protected PlayerView View => _player.View;
         protected Player Player => _player;
-        
-        public virtual void Enter() { }
 
-        public virtual void Exit() { }
+        public virtual void Enter()
+        {
+        }
+
+        public virtual void Exit()
+        {
+        }
 
         public virtual void Update()
         {
@@ -38,14 +42,15 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
             Vector3 dir = Data.Quanternion;
             dir.Normalize();
             
-            CharacterController.Move(velocity * Time.deltaTime);
+            CharacterController.Move(velocity * Player.Runner.DeltaTime);
+            // Player.transform.forward = velocity;
         }
 
         private Vector3 GetConvertedVelocity() => new Vector3(Data.Velocity.x, 0, Data.Velocity.y);
 
         public void HandleInput()
         {
-            if (!Player.Object.HasInputAuthority)
+            if (!Player.Object.HasStateAuthority)
                 return;
             Data.InputValue = ReadInput();
             Data.Velocity = Data.InputValue * Data.Speed;
