@@ -1,10 +1,11 @@
 using System;
 using Assets.Scripts.Abstractions;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.Global
 {
-    public class Health : MonoBehaviour, IDamagable, IBufuble
+    public class Health : NetworkBehaviour, IDamagable, IBufuble
     {
         [SerializeField] private GlobalConfig _config;
         
@@ -23,20 +24,23 @@ namespace Assets.Scripts.Global
             set => _health = value;
         }
 
-        public event Action HealthChanged;
+        public event Action<int> HealthChanged;
         public event Action Die;
 
         private void Start()
         {
             _health = _config.Health;
         }
-
-        public void TakeDamage(int damage)
+        
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        public void Rpc_TakeDamage(int damage)
         {
+            if(!HasStateAuthority)
+                return;
             if (damage <= 0)
                 throw new ArgumentOutOfRangeException("damage must be greater than 0");
             _health -= (damage - _damageReduction);
-            HealthChanged?.Invoke();
+            HealthChanged?.Invoke(_health);
             if (_health <= 0)
                 Die?.Invoke();
         }

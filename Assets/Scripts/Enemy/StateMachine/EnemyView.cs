@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Fusion;
+using UnityEngine;
 
 namespace Assets.Scripts.Enemy.StateMachine
 {
     [RequireComponent(typeof(Animator))]
-    public class EnemyView : MonoBehaviour
+    public class EnemyView : NetworkBehaviour
     {
         private const string isIdling = "IsIdling";
         private const string isRunning = "IsRunning";

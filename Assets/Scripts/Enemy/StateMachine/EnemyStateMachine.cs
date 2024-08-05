@@ -17,11 +17,10 @@ namespace Assets.Scripts.Enemy.StateMachine
             EnemyStateData enemyStateData, NavMeshAgent agent)
         {
             SearchAround searchAround = new SearchAround(enemy.transform, config.PatrollingConfig.DistanceToDetect);
-            RandomPointToMove randomPointToMove =
-                new RandomPointToMove(agent, enemy.Transform, config.PatrollingConfig.MaxDistanceToMove);
+            
             _states = new List<IState>()
             {
-                new PatrollingState(this, enemyStateData, enemy, searchAround, randomPointToMove),
+                new PatrollingState(this, enemyStateData, enemy, searchAround),
                 new AttackState(this, enemyStateData, enemy, searchAround),
                 new LoseState(this, enemyStateData, enemy, searchAround),
             };

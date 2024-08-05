@@ -23,11 +23,9 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Update()
         {
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            if (!Player.Object.HasStateAuthority)
+            if (!Player.HasStateAuthority)
                 return;
             base.Update();
-            Debug.Log("-------------------------------------");
             if (isShooting())
                 Shooter.Shoot?.Invoke(Data);
             if (IsInputZero())

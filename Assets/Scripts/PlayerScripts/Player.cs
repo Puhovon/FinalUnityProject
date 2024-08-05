@@ -3,6 +3,7 @@ using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
 using Fusion;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.PlayerScripts
 {
@@ -11,7 +12,10 @@ namespace Assets.Scripts.PlayerScripts
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private PlayerView _view;
         [SerializeField] private Shooter _shooter;
-        private MainInputActions _input;
+        [SerializeField] private Messagging _messagging;
+
+        [Inject] private MainInputActions _input;
+
         private PlayerStateMachine _stateMachine;
         private CharacterController _controller;
 
@@ -28,9 +32,10 @@ namespace Assets.Scripts.PlayerScripts
         {
             _view.Initialize();
             _shooter.Initialize();
-            _input = new MainInputActions();
             _controller = GetComponent<CharacterController>();
+            _input = new MainInputActions();
             _stateMachine = new PlayerStateMachine(this, _shooter, _config);
+            _messagging.Construct(Input);
         }
 
         public override void FixedUpdateNetwork()

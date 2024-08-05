@@ -26,6 +26,7 @@ namespace Assets.Scripts.Enemy.EnemySpawner
         {
             _factory = factory;
         }
+        
         private static EnemySpawner _instance;
         private void Awake()
         {
@@ -50,7 +51,6 @@ namespace Assets.Scripts.Enemy.EnemySpawner
             if (HasStateAuthority)
             {
                 StartCoroutine(SpawnEnemyByType(_currentWaveHeavy, EnemyType.HeavyMelly, IncrementHeavyCount));
-                Debug.LogError("SPAWN");
                 //StartCoroutine(SpawnEnemyByType(_currentWaveLite, EnemyType.HeavyMelly, IncrementLiteCount));
                 //StartCoroutine(SpawnEnemyByType(_currentWaveRange, EnemyType.Range, IncrementRangeCount));
             }
@@ -60,7 +60,6 @@ namespace Assets.Scripts.Enemy.EnemySpawner
         {
             for (int i = 0; i < currentLength; i++)
             {
-                Debug.LogError(currentLength);
                 RpcSpawnEnemy(type);
                 yield return new WaitForSeconds(0.5f);
             }

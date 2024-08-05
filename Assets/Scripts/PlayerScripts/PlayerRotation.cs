@@ -7,13 +7,12 @@ namespace Assets.Scripts.PlayerScripts
     {
         [SerializeField] private Player _player;
         [SerializeField] private Camera _camera;
-        [SerializeField] CharacterController _cc;
         
         float rotationFactorPerFrame = 15.0f;
         public override void FixedUpdateNetwork()
         {
             
-            if (!Object.HasInputAuthority)
+            if (!HasStateAuthority)
                 return;
 
             Vector2 mousePosition = _player.Input.Movement.MousePosition.ReadValue<Vector2>();
@@ -27,9 +26,15 @@ namespace Assets.Scripts.PlayerScripts
                 Vector3 point = ray.GetPoint(rayDistance);
                 Vector3 direction = (point - transform.position).normalized;
 
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                _player.Transform.rotation = lookRotation;
+                RpcRotatePlayer(direction);
             }
+        }
+        
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RpcRotatePlayer(Vector3 direction)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
+            _player.Transform.rotation = lookRotation;
         }
     }
 }

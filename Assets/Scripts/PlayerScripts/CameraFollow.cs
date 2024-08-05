@@ -5,16 +5,13 @@ public class CameraFollow : NetworkBehaviour
 {
     [SerializeField] private Transform player;
 
-    private Vector3 offset;
+    [SerializeField]private Vector3 offset = new Vector3(0,10,0);
 
-    private void Start()
-    {
-        offset = transform.position - player.position;
-    }
+    
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasInputAuthority)
+        if (!HasStateAuthority)
             return;
         transform.position = player.position + offset;
     }

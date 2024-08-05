@@ -33,6 +33,7 @@ namespace Assets.Scripts.PlayerScripts
 
         private void OnShoot(PlayerStateData data)
         {
+            print("SHOOT");
             _ammo = data.Ammo;
             if (!_canShoot)
                 return;
@@ -47,9 +48,11 @@ namespace Assets.Scripts.PlayerScripts
             RaycastHit hit;
             if (Runner.GetPhysicsScene().Raycast(transform.position, transform.forward, out hit, _config.distance))
             {
+                print("Find");
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    damagable.TakeDamage(_config.damage + _damageMagnifier);
+                    print("Damagable");
+                    damagable.Rpc_TakeDamage(_config.damage + _damageMagnifier);
                 }
                 _missParticle.transform.position = hit.point;
                 _missParticle.transform.rotation = Quaternion.LookRotation(hit.normal);

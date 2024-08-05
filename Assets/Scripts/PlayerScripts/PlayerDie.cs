@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts.Global;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
 {
-    public class PlayerDie : MonoBehaviour
+    public class PlayerDie : NetworkBehaviour
     {
         [SerializeField] private PlayerView _view;
         [SerializeField] private Health _health;

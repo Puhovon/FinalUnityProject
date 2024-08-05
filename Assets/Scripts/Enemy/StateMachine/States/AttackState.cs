@@ -57,12 +57,12 @@ namespace Assets.Scripts.Enemy.StateMachine.States
                 _enemy.NavMeshAgent.destination = (finded.Transform.position);
             }
         }
-
+        
         private void Attack(IEntity finded)
         {
             if (_canAttack && finded.Transform.TryGetComponent(out IDamagable damagable))
             {
-                damagable.TakeDamage(_config.Damage);
+                damagable.Rpc_TakeDamage(_config.Damage);
                 _enemy.StartCoroutine(Reload());
             }
         }

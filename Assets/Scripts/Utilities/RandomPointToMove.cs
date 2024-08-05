@@ -3,23 +3,12 @@ using UnityEngine.AI;
 
 namespace Assets.Scripts.Utilities
 {
-    public class RandomPointToMove
+    public static class RandomPointToMove
     {
-        private Transform _center;
-        private float _radius;
-        private NavMeshAgent _agent;
-        private NavMeshPath _path;
-        private Vector3 _point;
-        public RandomPointToMove(NavMeshAgent agent,Transform center, float radius)
+        public static Vector3 GetRandomPoint(Transform _center, float _radius, NavMeshAgent _agent)
         {
-            _agent = agent;
-            _center = center;
-            _radius = radius;
-            _path = new NavMeshPath();
-        }
-
-        public Vector3 GetRandomPoint()
-        {
+            var _path = new NavMeshPath();
+            Vector3 _point = Vector3.zero;
             bool isCorrectedPoint = false;
             while (!isCorrectedPoint)
             {

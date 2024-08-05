@@ -11,5 +11,7 @@ public class GameInit : MonoInstaller
         // Container.Bind<IBufuble>().FromInstance(buffable).NonLazy();
         // Container.Bind<BuffFactory>().AsSingle();
         Container.Bind<EnemyFactory>().AsSingle();
+        var input = new MainInputActions();
+        Container.Bind<MainInputActions>().FromInstance(input);
     }
 }

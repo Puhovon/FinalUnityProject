@@ -23,7 +23,7 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public override void Exit()
         {
-            if (!Player.Object.HasStateAuthority)
+            if (!Player.HasStateAuthority)
                 return;
             base.Exit();
             View.RunningStop();

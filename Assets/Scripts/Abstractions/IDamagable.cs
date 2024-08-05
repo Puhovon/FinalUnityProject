@@ -2,6 +2,6 @@
 {
     internal interface IDamagable
     {
-        void TakeDamage(int damage);
+        void Rpc_TakeDamage(int damage);
     }
 }

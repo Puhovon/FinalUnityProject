@@ -176,6 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9f039c7c425473388827d6d617c0305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
 --- !u!114 &2656219132621176822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +192,7 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: f609bb13b26a49d438fdc819a703c69e, type: 2}
   _view: {fileID: 4116064674421581943}
   _shooter: {fileID: 1566295481423996577}
+  _messagging: {fileID: 0}
 --- !u!114 &1566295481423996577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,4 +271,6 @@ MonoBehaviour:
   - {fileID: 4116064674421581943}
   - {fileID: 2656219132621176822}
   - {fileID: 1566295481423996577}
+  - {fileID: 6144080256787294625}
+  - {fileID: 2939255064954821118}
   - {fileID: 6239141874254010408}

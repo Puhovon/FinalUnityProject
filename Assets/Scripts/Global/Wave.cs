@@ -1,9 +1,10 @@
 ﻿using System;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.Global
 {
-    public class Wave : MonoBehaviour
+    public class Wave : NetworkBehaviour
     {
         [SerializeField] private float _timeToNextWave;
 
@@ -13,16 +14,18 @@ namespace Assets.Scripts.Global
         private void Awake()
         {
             _currentTime = _timeToNextWave;
-            SpawnNewWave?.Invoke();
+            // SpawnNewWave?.Invoke();
         }
 
-        private void Update()
+        public override void FixedUpdateNetwork()
         {
-            _currentTime -= Time.deltaTime;
+            if (!HasStateAuthority)
+                return;
+            _currentTime -= Runner.DeltaTime;
             if (_currentTime <= 0)
             {
                 SpawnNewWave?.Invoke();
-                _currentTime = _timeToNextWave;
+                _currentTime = 10000;
             }
         }
     }

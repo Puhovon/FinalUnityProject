@@ -17,8 +17,10 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         {
             base.Enter();
             View.RunningStart();
-            Data.PatrollingPoint = RandomPointToMove.GetRandomPoint();
-            Enemy.NavMeshAgent.destination = Data.PatrollingPoint;
+            if(Enemy.HasStateAuthority)
+            {
+                SetNewPatrollingPoint();
+            }
         }
 
         public override void Exit()
@@ -29,6 +31,8 @@ namespace Assets.Scripts.Enemy.StateMachine.States
 
         public override void Update()
         {
+            if (!Enemy.HasStateAuthority)
+                return;
             IsPlayerOnDetectedDistance();
             IsCharacterOnPatrolPoint();
         }
@@ -37,7 +41,7 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         {
             if ((Data.PatrollingPoint - Enemy.transform.position).magnitude < 0.1f && !_isChilling)
             {
-                Data.PatrollingPoint = RandomPointToMove.GetRandomPoint();
+                SetNewPatrollingPoint();
                 Enemy.StartCoroutine(Chill());
             }
         }
@@ -49,6 +53,12 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             {
                 StateSwitcher.SwitchState<AttackState>();
             }
+        }
+        private void SetNewPatrollingPoint()
+        {
+            Debug.LogError("SetNewOatrollingPoint");
+            Data.PatrollingPoint = RandomPointToMove.GetRandomPoint(Enemy.Transform, Enemy.Config.PatrollingConfig.MaxDistanceToMove, Enemy.NavMeshAgent);
+            Enemy.InvokeRpcSetPatrollingPoint(Data.PatrollingPoint);
         }
 
         private IEnumerator Chill()
@@ -73,9 +83,8 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         public PatrollingState(IStateSwitcher stateSwitcher,
             EnemyStateData data,
             Enemy enemy,
-            SearchAround searchAround,
-            RandomPointToMove randomMove)
-            : base(stateSwitcher, data, enemy, searchAround, randomMove)
+            SearchAround searchAround)
+            : base(stateSwitcher, data, enemy, searchAround)
         {
             _searchAround = searchAround;
         }
