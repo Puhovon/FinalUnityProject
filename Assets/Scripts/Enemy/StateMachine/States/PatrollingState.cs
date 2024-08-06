@@ -2,7 +2,6 @@
 using System.Linq;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.Enemy.StateMachine.States.Abstracts;
-using Assets.Scripts.Utilities;
 using UnityEngine;
 using Utilities;
 
@@ -17,10 +16,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         {
             base.Enter();
             View.RunningStart();
-            if(Enemy.HasStateAuthority)
-            {
-                SetNewPatrollingPoint();
-            }
         }
 
         public override void Exit()
@@ -35,19 +30,24 @@ namespace Assets.Scripts.Enemy.StateMachine.States
                 return;
             IsPlayerOnDetectedDistance();
             IsCharacterOnPatrolPoint();
+            Debug.LogError($"Enemy: {Enemy.Transform.name} is chilling: {_isChilling}");
         }
 
         private void IsCharacterOnPatrolPoint()
         {
-            if ((Data.PatrollingPoint - Enemy.transform.position).magnitude < 0.1f && !_isChilling)
+            if(!Enemy.HasStateAuthority)
+                return;
+            if ((Enemy.pointToMove - Enemy.transform.position).magnitude < 0.1f && !_isChilling || Enemy.pointToMove == Vector3.zero)
             {
-                SetNewPatrollingPoint();
+                Debug.LogError("IsCharacterOnPatrolPoint");
                 Enemy.StartCoroutine(Chill());
             }
         }
 
         private void IsPlayerOnDetectedDistance()
         {
+            if(!Enemy.HasStateAuthority)
+                return;
             var finded = _searchAround.Find().FirstOrDefault(r => r is PlayerScripts.Player);
             if (finded != null)
             {
@@ -56,28 +56,30 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         }
         private void SetNewPatrollingPoint()
         {
-            Debug.LogError("SetNewOatrollingPoint");
-            Data.PatrollingPoint = RandomPointToMove.GetRandomPoint(Enemy.Transform, Enemy.Config.PatrollingConfig.MaxDistanceToMove, Enemy.NavMeshAgent);
-            Enemy.InvokeRpcSetPatrollingPoint(Data.PatrollingPoint);
+            if(!Enemy.HasStateAuthority)
+                return;
+            Enemy.InvokeRpcSetPatrollingPoint();
         }
 
         private IEnumerator Chill()
         {
-            _isChilling = true;
-
-            //View.RunningStop();
-            //View.ChillingStart();
-
-            for (int i = 0; i < Data.ChillTime; i++)
+            if(Enemy.HasStateAuthority)
             {
-                yield return new WaitForSeconds(1);
+                _isChilling = true;
+                Debug.Log("IS CHILLING");
+                //View.RunningStop();
+                //View.ChillingStart();
+                for (int i = 0; i < Data.ChillTime; i++)
+                {
+                    yield return new WaitForSeconds(1);
+                    Debug.LogError("CHILL");
+                }
+                //View.ChillingStop();
+                //View.RunningStart();
+                _isChilling = false;
+                Debug.Log("NOT CHILLING");
+                SetNewPatrollingPoint();
             }
-
-            //View.ChillingStop();
-            //View.RunningStart();
-
-            _isChilling = false;
-            Enemy.NavMeshAgent.destination = Data.PatrollingPoint;
         }
 
         public PatrollingState(IStateSwitcher stateSwitcher,

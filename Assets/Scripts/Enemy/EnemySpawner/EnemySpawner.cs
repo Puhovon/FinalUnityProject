@@ -14,6 +14,7 @@ namespace Assets.Scripts.Enemy.EnemySpawner
         [SerializeField] private LevelConfig _levelConfig;
         [SerializeField] private Wave _wave;
         [SerializeField] private Transform spawnPoint;
+        [SerializeField] private Transform[] _patrollingPoints;
 
         private int _currentWaveRange;
         [SerializeField] private int _currentWaveHeavy;
@@ -69,7 +70,7 @@ namespace Assets.Scripts.Enemy.EnemySpawner
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         private void RpcSpawnEnemy(EnemyType type)
         {
-            var enemy = _factory.Spawn(type, spawnPoint);
+            var enemy = _factory.Spawn(type, spawnPoint, _patrollingPoints);
             Runner.Spawn(enemy, spawnPoint.position, Quaternion.identity);
         }
 

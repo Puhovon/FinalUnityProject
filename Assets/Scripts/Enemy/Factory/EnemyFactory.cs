@@ -1,4 +1,5 @@
 using System.IO;
+using Assets.Scripts.Enemy;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -22,7 +23,7 @@ public class EnemyFactory
         Load();
     }
 
-    public GameObject Spawn(EnemyType type, Transform transform)
+    public GameObject Spawn(EnemyType type, Transform transform, Transform[] patrollingPoints)
     {
         GameObject prefab = type switch
         {
@@ -38,12 +39,11 @@ public class EnemyFactory
             return null;
         }
         
-        if (prefab.GetComponent<NetworkObject>() == null)
-        {
-            Debug.LogError($"Prefab {prefab.name} does not have a NetworkObject component.");
-            return null;
-        }
-        return _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
+        
+        
+        var obj = _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
+        obj.GetComponent<Transformer>().Construct(patrollingPoints);
+        return obj;
     }
 
     private void Load()

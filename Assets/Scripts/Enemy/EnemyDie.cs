@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Buffs.Fabric;
 using Assets.Scripts.Global;
+using Fusion;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Enemy
 {
-    public class EnemyDie : MonoBehaviour
+    public class EnemyDie : NetworkBehaviour
     {
         [SerializeField] private Health _health;
         [SerializeField] private GameObject[] _abilities;
@@ -25,8 +26,9 @@ namespace Assets.Scripts.Enemy
 
         private void Die()
         {
+            var obj = transform.parent.GetComponent<NetworkObject>();
             _health.Die -= Die;
-            Destroy(gameObject);
+            Runner.Despawn(obj);
         }
     }
 }

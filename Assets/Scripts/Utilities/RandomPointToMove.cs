@@ -20,6 +20,7 @@ namespace Assets.Scripts.Utilities
                 if (_path.status == NavMeshPathStatus.PathComplete) isCorrectedPoint = true;
             }
 
+            _point.y = _center.position.y;
             return _point;
         }
     }
