@@ -1,48 +1,26 @@
-using Assets.Scripts.Abstractions;
-using Assets.Scripts.Global;
-using Assets.Scripts.Utilities;
-using DG.Tweening;
+
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts.Buffs
 {
-    public class HealthBuff : MonoBehaviour, IBuff
+    public class HealthBuff : Buff
     {
         [SerializeField] private int _healthToAdd;
-        [SerializeField] private int _timeToEnd;
-        private CoroutineTimer _timer;
 
-        [Inject] private IBufuble _bufuble;
-
-        private void Start()
+        public override void StartBuff()
         {
-            _timer = new CoroutineTimer(_timeToEnd, EndBuff);
+            base.StartBuff();
+            Buffable.HealthPoints += _healthToAdd;
         }
 
-        private void OnTriggerEnter(Collider other)
+        public override void EndBuff()
         {
-            if (other.CompareTag("Player"))
+            if (Buffable.HealthPoints - _healthToAdd <= 0)
             {
-                StartBuff();
-                StartCoroutine(_timer.Timer());
-            }
-        }
-
-        public void StartBuff()
-        {
-            _bufuble.HealthPoints += _healthToAdd;
-            transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 1);
-        }
-
-        public void EndBuff()
-        {
-            if (_bufuble.HealthPoints - _healthToAdd <= 0)
-            {
-                _bufuble.HealthPoints = 1;
+                Buffable.HealthPoints = 1;
             } else 
-                _bufuble.HealthPoints -= _healthToAdd;
-            Destroy(gameObject);
+                Buffable.HealthPoints -= _healthToAdd;
+            base.EndBuff();
         }
     }
 }

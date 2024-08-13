@@ -1920,6 +1920,7 @@ GameObject:
   - component: {fileID: -8254222771291808366}
   - component: {fileID: 4929518008250487770}
   - component: {fileID: -3422352510295334870}
+  - component: {fileID: 1670179639144441391}
   m_Layer: 0
   m_Name: HeavyEnemy
   m_TagString: Untagged
@@ -1978,9 +1979,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 5527160565275763044}
+  _pointToMove: {x: 0, y: 0, z: 0}
   _config: {fileID: 11400000, guid: ca6cc42a14a975b4485c0763817abedb, type: 2}
   _type: 0
   _view: {fileID: 0}
+  _currentTransfrom: {x: 0, y: 0, z: 0}
 --- !u!114 &264347248562533244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1993,6 +1996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb9385821c2a339458c7f1380cdb0a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
 --- !u!195 &5527160565275763044
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2073,6 +2077,21 @@ MonoBehaviour:
   - {fileID: 4496518271799481685}
   - {fileID: 264347248562533244}
   - {fileID: 4929518008250487770}
+  - {fileID: 1670179639144441391}
+--- !u!114 &1670179639144441391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541754002163558908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a58403c67db3b4f966904b7bdcf7c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: {fileID: 4929518008250487770}
+  _abilities: []
 --- !u!1 &3921334144448749991
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,6 @@ using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
 using Fusion;
 using UnityEngine;
-using Zenject;
 
 namespace Assets.Scripts.PlayerScripts
 {
@@ -12,15 +11,14 @@ namespace Assets.Scripts.PlayerScripts
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private PlayerView _view;
         [SerializeField] private Shooter _shooter;
-        [SerializeField] private Messagging _messagging;
-
-        [Inject] private MainInputActions _input;
-
+        [SerializeField] private CameraFollow _cameraFollow;
+        
+        [Networked] public NetworkButtons ButtonsPrevious { get; set; }
+        
         private PlayerStateMachine _stateMachine;
-        private CharacterController _controller;
+        private NetworkCharacterController _controller;
 
-        public MainInputActions Input => _input;
-        public CharacterController CharacterController => _controller;
+        public NetworkCharacterController CharacterController => _controller;
         public PlayerConfig Config => _config;
         
         public PlayerView View => _view;
@@ -28,27 +26,24 @@ namespace Assets.Scripts.PlayerScripts
         public Transform Transform => transform;
         public PlayerStateMachine StateMachine => _stateMachine;
 
-        private void Awake()
+
+        public override void Spawned()
         {
             _view.Initialize();
             _shooter.Initialize();
-            _controller = GetComponent<CharacterController>();
-            _input = new MainInputActions();
+            _controller = GetComponent<NetworkCharacterController>();
+            // _controller.rotationSpeed = 0;
             _stateMachine = new PlayerStateMachine(this, _shooter, _config);
-            _messagging.Construct(Input);
+            // _cameraFollow.Init(transform);
         }
-
         public override void FixedUpdateNetwork()
         {
+            print(HasStateAuthority);
             if (HasStateAuthority)
             {
                 _stateMachine.HandleInput();
             }
             _stateMachine.Update();
         }
-
-        private void OnEnable() => _input.Enable();
-
-        private void OnDisable() => _input.Disable();
     }
 }

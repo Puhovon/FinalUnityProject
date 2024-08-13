@@ -1,50 +1,24 @@
-﻿using Assets.Scripts.Abstractions;
-using Assets.Scripts.Global;
-using Assets.Scripts.Utilities;
-using DG.Tweening;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Buffs
 {
-    public class ShieldBuff : MonoBehaviour, IBuff
+    public class ShieldBuff : Buff
     {
-        [Inject]
-        private IBufuble _bufuble;
-        
         [SerializeField] private int _damageReduction;
-        [SerializeField] private int _timeToEnd;
-        private CoroutineTimer _timer;
 
-        private void Start()
-        {
-            _timer = new CoroutineTimer(_timeToEnd, EndBuff);
+        public override void StartBuff() {
+            base.StartBuff();
+            Buffable.DamageReduction += _damageReduction;
         }
 
-        private void OnTriggerEnter(Collider other) 
+        public override void EndBuff()
         {
-            if (other.CompareTag("Player"))
+            Buffable.DamageReduction -= _damageReduction;
+            if (Buffable.DamageReduction < 0)
             {
-                StartBuff();
-                StartCoroutine(_timer.Timer());
+                Buffable.DamageReduction = 0;
             }
+            base.EndBuff();
         }
-
-        public void StartBuff() {
-            _bufuble.DamageReduction += _damageReduction;
-            transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 1);
-        }
-        
-
-        public void EndBuff()
-        {
-            _bufuble.DamageReduction -= _damageReduction;
-            if (_bufuble.DamageReduction < 0)
-            {
-                _bufuble.DamageReduction = 0;
-            }
-            Destroy(gameObject);
-        }
-
     }
 }

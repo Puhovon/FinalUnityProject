@@ -14,7 +14,7 @@ namespace Assets.Scripts.Buffs
 
         public void EndBuff()
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
     }
 }

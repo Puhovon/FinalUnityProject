@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Fusion;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -12,16 +13,16 @@ namespace Assets.Scripts.Buffs.Fabric
         private IInstantiator _instantiator;
         private GameObject[] _buffs;
 
-        public BuffFactory(IInstantiator instantiator)
+        public BuffFactory()
         {
-            _instantiator = instantiator;
             Load();
         }
 
-        public void GetRandomBuff(Vector3 pos)
+        public void GetRandomBuff(Vector3 pos, NetworkBehaviour _behaviour)
         {
-            var index = Random.Range(0, _buffs.Length);
-            _instantiator.InstantiatePrefab(_buffs[index], pos, Quaternion.identity, null);
+            var index = Random.Range(0, _buffs.Length-1);
+            Debug.Log(index);
+            _behaviour.Runner.Spawn(_buffs[index], pos);
         }
 
         private void Load()

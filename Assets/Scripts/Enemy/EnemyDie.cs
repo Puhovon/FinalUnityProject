@@ -9,24 +9,18 @@ namespace Assets.Scripts.Enemy
     public class EnemyDie : NetworkBehaviour
     {
         [SerializeField] private Health _health;
-        [SerializeField] private GameObject[] _abilities;
         private BuffFactory _factory;
-
 
         private void Start()
         {
             _health.Die += Die;
+             _factory = new BuffFactory();
         }
-
-        // [Inject]
-        // public void Construct(BuffFactory factory)
-        // {
-        //     _factory = factory;
-        // }
-
+        
         private void Die()
         {
             var obj = transform.parent.GetComponent<NetworkObject>();
+            _factory.GetRandomBuff(transform.position, this);
             _health.Die -= Die;
             Runner.Despawn(obj);
         }
