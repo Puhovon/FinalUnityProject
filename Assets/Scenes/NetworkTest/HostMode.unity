@@ -838,6 +838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1127163351}
   - component: {fileID: 1127163350}
+  - component: {fileID: 1127163352}
   m_Layer: 0
   m_Name: PlayerSpawner
   m_TagString: Untagged
@@ -874,6 +875,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1127163352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127163349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3888131344
+  ObjectInterest: 1
+  Flags: 1
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1127163350}
 --- !u!1 &1255178830
 GameObject:
   m_ObjectHideFlags: 0
