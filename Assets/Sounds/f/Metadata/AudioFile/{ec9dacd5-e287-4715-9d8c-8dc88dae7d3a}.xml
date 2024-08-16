@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{ec9dacd5-e287-4715-9d8c-8dc88dae7d3a}">
+		<property name="assetPath">
+			<value>New Folder/layered-gunshot_G_minor.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.4979818594104308</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{2b42473b-cd2b-4a0a-be8c-f2c36f300e7c}</destination>
+		</relationship>
+	</object>
+</objects>

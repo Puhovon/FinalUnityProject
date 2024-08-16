@@ -3,6 +3,7 @@ using System.Collections;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
+using FMODUnity;
 using Fusion;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Assets.Scripts.PlayerScripts
         private int _damageMagnifier = 0;
         private float _timeToNextShoot;
         private bool _canShoot = true;
-
+        private StudioEventEmitter _emitter;
         public Action<PlayerStateData> Shoot;
          
         public int DamageMagnifier
@@ -29,6 +30,7 @@ namespace Assets.Scripts.PlayerScripts
         {
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
             Shoot += OnShoot;
+            _emitter = FindObjectOfType<StudioEventEmitter>();
         }
 
         private void OnShoot(PlayerStateData data)
@@ -38,6 +40,7 @@ namespace Assets.Scripts.PlayerScripts
             if (!_canShoot)
                 return;
             Attack();
+            _emitter.Play();
             _canShoot = false;
             data.Ammo -= 1;
             StartCoroutine(data.Ammo <= 0 ? Reload(data) : CalculateTimeToNextShoot());
