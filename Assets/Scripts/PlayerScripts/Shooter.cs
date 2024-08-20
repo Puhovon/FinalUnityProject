@@ -7,7 +7,6 @@ using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
 using Assets.Scripts.UI;
-using FMOD.Studio;
 
 namespace Assets.Scripts.PlayerScripts
 {
@@ -21,9 +20,12 @@ namespace Assets.Scripts.PlayerScripts
         private int _damageMagnifier = 0;
         private float _timeToNextShoot;
         private bool _canShoot = true;
+        private AmmoUI _ui;
+        
         public Action<PlayerStateData> Shoot;
 
         public StudioEventEmitter Emmiter => _emitter;
+        
          
         public int DamageMagnifier
         {
@@ -37,6 +39,8 @@ namespace Assets.Scripts.PlayerScripts
             Shoot += OnShoot;
             _emitter = FindObjectOfType<StudioEventEmitter>();
             FindObjectOfType<SettingsUI>().Initialize(this);
+            _ui = FindObjectOfType<AmmoUI>();
+            _ui.onAmmoChanged?.Invoke(_config.WalkingStateConfig.MaxAmmo);
         }
 
         private void OnShoot(PlayerStateData data)
@@ -45,15 +49,16 @@ namespace Assets.Scripts.PlayerScripts
             if (!_canShoot)
                 return;
             Attack();
-            _emitter.Play();
             _canShoot = false;
             data.Ammo -= 1;
+            _ui.onAmmoChanged?.Invoke(data.Ammo);
             StartCoroutine(data.Ammo <= 0 ? Reload(data) : CalculateTimeToNextShoot());
         }
 
         private void Attack()
         {
             RaycastHit hit;
+            _emitter.Play();
             if (Runner.GetPhysicsScene().Raycast(transform.position, transform.forward, out hit, _config.distance))
             {
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
@@ -70,9 +75,14 @@ namespace Assets.Scripts.PlayerScripts
 
         private IEnumerator Reload(PlayerStateData data)
         {
-            yield return new WaitForSeconds(_config.ReloadingStateConfig.TimeToReload);
+            for (int i = 1; i <= _config.ReloadingStateConfig.TimeToReload; i++)
+            {
+                yield return new WaitForSeconds(1);
+                _ui.Reload((float)i, _config.ReloadingStateConfig.TimeToReload);
+            }
             _canShoot = true;
             data.Ammo = data.MaxAmmo;
+            _ui.onAmmoChanged?.Invoke(data.Ammo);
         }
 
         private IEnumerator CalculateTimeToNextShoot()
