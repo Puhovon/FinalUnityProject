@@ -6,17 +6,16 @@ namespace Assets.Scripts.Buffs
 {
     internal class SpeedBuff : Buff
     {
-        [SerializeField] private PlayerScripts.Player player;
         [SerializeField] private int speedMagnifier;
         public override void StartBuff()
         {
             base.StartBuff();
-            player.CharacterController.maxSpeed += speedMagnifier;
+            Player.CharacterController.maxSpeed += speedMagnifier;
         }
 
         public override void EndBuff()
         {
-            player.CharacterController.maxSpeed -= speedMagnifier;
+            Player.CharacterController.maxSpeed -= speedMagnifier;
             base.EndBuff();
         }
     }

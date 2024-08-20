@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.Global;
+using Assets.Scripts.PlayerScripts;
 using Assets.Scripts.Utilities;
 using DG.Tweening;
 using Fusion;
@@ -17,6 +18,8 @@ namespace Assets.Scripts.Buffs
         private IBufuble _bufuble;
 
         protected IBufuble Buffable => _bufuble;
+        protected Shooter Shooter;
+        protected Player Player;
 
         private void Start()
         {
@@ -29,6 +32,8 @@ namespace Assets.Scripts.Buffs
             if (other.CompareTag("Player"))
             {
                 _bufuble = other.GetComponent<IBufuble>();
+                Shooter = other.GetComponent<Shooter>();
+                Player = other.GetComponent<Player>();
                 StartBuff();
                 StartCoroutine(_timer.Timer());
             }

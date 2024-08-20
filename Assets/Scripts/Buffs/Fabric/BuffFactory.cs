@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Fusion;
 using UnityEngine;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Buffs.Fabric
@@ -10,7 +9,6 @@ namespace Assets.Scripts.Buffs.Fabric
     {
         private const string BuffsPath = "Buffs";
 
-        private IInstantiator _instantiator;
         private GameObject[] _buffs;
 
         public BuffFactory()
@@ -20,7 +18,7 @@ namespace Assets.Scripts.Buffs.Fabric
 
         public void GetRandomBuff(Vector3 pos, NetworkBehaviour _behaviour)
         {
-            var index = Random.Range(0, _buffs.Length-1);
+            var index = Random.Range(0, _buffs.Length);
             Debug.Log(_buffs[index].name);
             _behaviour.Runner.Spawn(_buffs[index], _behaviour.transform.position);
         }
