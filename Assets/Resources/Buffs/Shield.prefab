@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeToEnd: 5
   _transform: {fileID: 3999815754360592028}
+  _object: {fileID: 6842589885617352953}
   _damageReduction: 5
 --- !u!65 &3964746196963254787
 BoxCollider:

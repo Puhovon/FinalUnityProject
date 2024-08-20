@@ -21,8 +21,8 @@ namespace Assets.Scripts.Buffs.Fabric
         public void GetRandomBuff(Vector3 pos, NetworkBehaviour _behaviour)
         {
             var index = Random.Range(0, _buffs.Length-1);
-            Debug.Log(index);
-            _behaviour.Runner.Spawn(_buffs[index], pos);
+            Debug.Log(_buffs[index].name);
+            _behaviour.Runner.Spawn(_buffs[index], _behaviour.transform.position);
         }
 
         private void Load()

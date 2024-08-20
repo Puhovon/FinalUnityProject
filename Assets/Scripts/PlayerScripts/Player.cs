@@ -34,7 +34,6 @@ namespace Assets.Scripts.PlayerScripts
         }
         public override void FixedUpdateNetwork()
         {
-            print(HasStateAuthority);
             if (HasStateAuthority)
             {
                 _stateMachine.HandleInput();

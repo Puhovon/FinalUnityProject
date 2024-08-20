@@ -154,6 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeToEnd: 5
   _transform: {fileID: 82679512330212216}
+  _object: {fileID: 3988702406591554197}
   _healthToAdd: 10
 --- !u!114 &776341077284513296
 MonoBehaviour:

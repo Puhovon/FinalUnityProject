@@ -4,17 +4,20 @@ using System;
 using UnityEngine;
 namespace Assets.Scripts.Buffs
 {
-    internal class SpeedBuff : MonoBehaviour, IBuff
+    internal class SpeedBuff : Buff
     {
         [SerializeField] private PlayerScripts.Player player;
-        public void StartBuff()
+        [SerializeField] private int speedMagnifier;
+        public override void StartBuff()
         {
-            //player.CharacterController.velocity
+            base.StartBuff();
+            player.CharacterController.maxSpeed += speedMagnifier;
         }
 
-        public void EndBuff()
+        public override void EndBuff()
         {
-            // throw new NotImplementedException();
+            player.CharacterController.maxSpeed -= speedMagnifier;
+            base.EndBuff();
         }
     }
 }

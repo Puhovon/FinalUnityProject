@@ -11,9 +11,9 @@ namespace Assets.Scripts.Buffs
     {
         [SerializeField] private int _timeToEnd;
         [SerializeField] private NetworkTransform _transform;
-        
+        [SerializeField] private GameObject _object;
         private CoroutineTimer _timer;
-        
+        private Collider _collider;
         private IBufuble _bufuble;
 
         protected IBufuble Buffable => _bufuble;
@@ -21,6 +21,7 @@ namespace Assets.Scripts.Buffs
         private void Start()
         {
             _timer = new CoroutineTimer(_timeToEnd, EndBuff);
+            _collider = GetComponent<Collider>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -36,12 +37,15 @@ namespace Assets.Scripts.Buffs
         public virtual void StartBuff()
         {
             Rpc_Hide();
+            _object.SetActive(false);
+            _collider.enabled = false;
         }
 
         [Rpc(RpcSources.All, RpcTargets.All)]
         private void Rpc_Hide()
         {
-            _transform.transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 1).onComplete = () => Debug.LogError("End DOSCALE");
+            _object.SetActive(false);
+            _collider.enabled = false;
         }
         
         public virtual void EndBuff()
