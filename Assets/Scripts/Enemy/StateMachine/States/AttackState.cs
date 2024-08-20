@@ -42,15 +42,11 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             if (finded == null)
                 StateSwitcher.SwitchState<LoseState>();
 
-            
             IsCanAttack(finded);
         }
 
         private void IsCanAttack(IEntity finded)
         {
-            if (finded is null)
-                return;
-            _enemy.transform.LookAt(finded.Transform);
             if ((_enemy.transform.position - finded.Transform.position).magnitude <= _config.DistanceToAttack) {
                 _enemy.NavMeshAgent.isStopped = true;
                 Attack(finded);
@@ -76,6 +72,5 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             yield return new WaitForSeconds(_config.TimeToNextAttack);
             _canAttack = true;
         }
-
     }
 }

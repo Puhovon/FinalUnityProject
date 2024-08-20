@@ -15,18 +15,18 @@ namespace Assets.Scripts.Buffs.Fabric
         {
             Load();
         }
-
-        public void GetRandomBuff(Vector3 pos, NetworkBehaviour _behaviour)
+        
+        public NetworkObject GetRandomBuff(int index)
         {
-            var index = Random.Range(0, _buffs.Length);
-            Debug.Log(_buffs[index].name);
-            _behaviour.Runner.Spawn(_buffs[index], _behaviour.transform.position);
+            return _buffs[index].GetComponent<NetworkObject>();
         }
 
+        public int GetBuffsCount() => _buffs.Length;
+        
         private void Load()
         {
             _buffs = Resources.LoadAll<GameObject>(Path.Combine(BuffsPath));
-            Debug.Log(_buffs.Length);
+            Debug.LogError(_buffs.Length);
         }
     }
 }

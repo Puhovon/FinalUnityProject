@@ -2,7 +2,7 @@
 using Assets.Scripts.Global;
 using Fusion;
 using UnityEngine;
-using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Enemy
 {
@@ -19,10 +19,17 @@ namespace Assets.Scripts.Enemy
         
         private void Die()
         {
+            Rpc_SpawnBuff();
             var obj = transform.parent.GetComponent<NetworkObject>();
-            _factory.GetRandomBuff(transform.position, this);
             _health.Die -= Die;
             Runner.Despawn(obj);
+        }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void Rpc_SpawnBuff()
+        {
+            var index = Random.Range(0, _factory.GetBuffsCount());
+            Runner.Spawn(_factory.GetRandomBuff(index), transform.position);
         }
     }
 }
