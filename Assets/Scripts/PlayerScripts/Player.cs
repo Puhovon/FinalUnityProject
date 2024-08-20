@@ -11,7 +11,6 @@ namespace Assets.Scripts.PlayerScripts
         [SerializeField] private PlayerConfig _config;
         [SerializeField] private PlayerView _view;
         [SerializeField] private Shooter _shooter;
-        [SerializeField] private CameraFollow _cameraFollow;
         
         [Networked] public NetworkButtons ButtonsPrevious { get; set; }
         
@@ -24,7 +23,6 @@ namespace Assets.Scripts.PlayerScripts
         public PlayerView View => _view;
 
         public Transform Transform => transform;
-        public PlayerStateMachine StateMachine => _stateMachine;
 
 
         public override void Spawned()
@@ -32,9 +30,7 @@ namespace Assets.Scripts.PlayerScripts
             _view.Initialize();
             _shooter.Initialize();
             _controller = GetComponent<NetworkCharacterController>();
-            // _controller.rotationSpeed = 0;
             _stateMachine = new PlayerStateMachine(this, _shooter, _config);
-            // _cameraFollow.Init(transform);
         }
         public override void FixedUpdateNetwork()
         {

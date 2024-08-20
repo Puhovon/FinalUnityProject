@@ -1,24 +1,29 @@
 ﻿using System;
+using Fusion;
+using FMODUnity;
+using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
-using FMODUnity;
-using Fusion;
-using UnityEngine;
+using Assets.Scripts.UI;
+using FMOD.Studio;
 
 namespace Assets.Scripts.PlayerScripts
 {
     public class Shooter : NetworkBehaviour
     {
         [SerializeField] private PlayerConfig _config;
-        [SerializeField] private int _ammo;
         [SerializeField] private ParticleSystem _missParticle;
+        [SerializeField] private StudioEventEmitter _emitter;
+        [SerializeField] private int _ammo;
+
         private int _damageMagnifier = 0;
         private float _timeToNextShoot;
         private bool _canShoot = true;
-        private StudioEventEmitter _emitter;
         public Action<PlayerStateData> Shoot;
+
+        public StudioEventEmitter Emmiter => _emitter;
          
         public int DamageMagnifier
         {
@@ -31,11 +36,11 @@ namespace Assets.Scripts.PlayerScripts
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
             Shoot += OnShoot;
             _emitter = FindObjectOfType<StudioEventEmitter>();
+            FindObjectOfType<SettingsUI>().Initialize(this);
         }
 
         private void OnShoot(PlayerStateData data)
         {
-            print("SHOOT");
             _ammo = data.Ammo;
             if (!_canShoot)
                 return;
@@ -51,10 +56,8 @@ namespace Assets.Scripts.PlayerScripts
             RaycastHit hit;
             if (Runner.GetPhysicsScene().Raycast(transform.position, transform.forward, out hit, _config.distance))
             {
-                print("Find");
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    print("Damagable");
                     damagable.Rpc_TakeDamage(_config.damage + _damageMagnifier);
                 }
                 _missParticle.transform.position = hit.point;
@@ -81,7 +84,7 @@ namespace Assets.Scripts.PlayerScripts
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawRay(transform.position, (transform.forward)* _config.distance);
+            Gizmos.DrawRay(transform.position, transform.forward * _config.distance);
         }
     }
 }

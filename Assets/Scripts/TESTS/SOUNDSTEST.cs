@@ -6,6 +6,7 @@ using UnityEngine;
 public class SOUNDSTEST : MonoBehaviour
 {
     [SerializeField] private StudioEventEmitter _emitter;
+    
     void Start()
     {
         _emitter = FindObjectOfType<StudioEventEmitter>();
@@ -13,7 +14,10 @@ public class SOUNDSTEST : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
             _emitter.Play();
+            print("AAAAAAAAAAAAAAA");
+        }
     }
 }

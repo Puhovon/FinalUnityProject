@@ -48,6 +48,9 @@ namespace Assets.Scripts.Enemy.StateMachine.States
 
         private void IsCanAttack(IEntity finded)
         {
+            if (finded is null)
+                return;
+            _enemy.transform.LookAt(finded.Transform);
             if ((_enemy.transform.position - finded.Transform.position).magnitude <= _config.DistanceToAttack) {
                 _enemy.NavMeshAgent.isStopped = true;
                 Attack(finded);

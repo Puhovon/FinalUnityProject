@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using FMOD.Studio;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
@@ -10,13 +11,14 @@ namespace Assets.Scripts.PlayerScripts
 
         private const string IsIdling = "IsIdling";
         private const string IsRunning = "IsRunning";
+        
 
+        
         public void Initialize()
         {
             // _animator = GetComponent<Animator>();
         }
 
-        // [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
         public void IdlingStop()
         {
             if (HasStateAuthority)

@@ -8,7 +8,8 @@ public class BaseHostSpawner : NetworkBehaviour, IPlayerJoined, IPlayerLeft
     [SerializeField] private NetworkPrefabRef _playerPrefab;
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
 
-
+    public int PlayerCount => _spawnedCharacters.Count;
+    
     // public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     // {
     //     if (runner.IsServer)
