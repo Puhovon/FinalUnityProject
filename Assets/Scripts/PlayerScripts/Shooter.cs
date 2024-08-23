@@ -21,6 +21,7 @@ namespace Assets.Scripts.PlayerScripts
         private float _timeToNextShoot;
         private bool _canShoot = true;
         private AmmoUI _ui;
+        private int _shoots = 0;
         
         public Action<PlayerStateData> Shoot;
 
@@ -51,6 +52,8 @@ namespace Assets.Scripts.PlayerScripts
             Attack();
             _canShoot = false;
             data.Ammo -= 1;
+            _shoots++;
+            PlayerPrefs.SetInt("Shoots", _shoots);
             _ui.onAmmoChanged?.Invoke(data.Ammo);
             StartCoroutine(data.Ammo <= 0 ? Reload(data) : CalculateTimeToNextShoot());
         }

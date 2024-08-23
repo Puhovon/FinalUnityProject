@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NetworkTest/HostMode.unity
     guid: d015e4b39f42c154f83e6ff87b380f3c
+  - enabled: 1
+    path: Assets/Scenes/NetworkTest/Achievements.unity
+    guid: 6f1356d638789b0488f72fedf37be1fd
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 76c0d41de3634ff49a39f151ef483f50,
       type: 2}

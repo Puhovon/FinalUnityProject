@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Global;
 using Fusion;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.PlayerScripts
 {
@@ -8,16 +9,19 @@ namespace Assets.Scripts.PlayerScripts
     {
         [SerializeField] private PlayerView _view;
         [SerializeField] private Health _health;
-
-        private void Constructor(Health playerHealth)
-        {
-            _health = playerHealth;
-            _health.Die += () => Debug.Log("PlayerDie!");
-        }
-
+        private NetworkRunner _runner;
+        
         private void Start()
         {
-            _health.Die += () => Debug.Log("Player Die");
+            _health.Die += Die;
+            
+        }
+
+        private void Die()
+        {
+            var runner = GameObject.FindGameObjectWithTag("Runner");
+            Destroy(runner);
+            SceneManager.LoadScene("Achievements");
         }
     }
 }
