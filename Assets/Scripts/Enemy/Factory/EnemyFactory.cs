@@ -23,7 +23,7 @@ public class EnemyFactory
         Load();
     }
 
-    public GameObject Spawn(EnemyType type, Transform transform, Transform[] patrollingPoints)
+    public void Spawn(EnemyType type, Transform transform, NetworkBehaviour b)
     {
         GameObject prefab = type switch
         {
@@ -32,18 +32,7 @@ public class EnemyFactory
             EnemyType.LiteMelly => _smallMelly,
             _ => null,
         };
-
-        if (prefab == null)
-        {
-            Debug.LogError("Enemy prefab is null");
-            return null;
-        }
-        
-        
-        
-        var obj = _instantiator.InstantiatePrefab(prefab, transform.position, Quaternion.identity, null);
-        obj.GetComponent<Transformer>().Construct(patrollingPoints);
-        return obj;
+        b.Runner.Spawn(prefab);
     }
 
     private void Load()

@@ -3,16 +3,22 @@ using UnityEngine;
 
 public class CameraFollow : NetworkBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform _player;
 
-    [SerializeField]private Vector3 offset = new Vector3(0,10,0);
+    [SerializeField] private Vector3 offset;
 
-    
+    public void Init(Transform player)
+    {
+        if(!HasInputAuthority)
+            return;
+        _player = player;
+        offset = new Vector3(_player.position.x, 20, _player.position.z);
+    }
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority)
+        if (!HasInputAuthority || _player == null)
             return;
-        transform.position = player.position + offset;
+        transform.position = _player.position + offset;
     }
 }

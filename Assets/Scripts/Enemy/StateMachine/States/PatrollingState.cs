@@ -30,7 +30,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States
                 return;
             IsPlayerOnDetectedDistance();
             IsCharacterOnPatrolPoint();
-            Debug.LogError($"Enemy: {Enemy.Transform.name} is chilling: {_isChilling}");
         }
 
         private void IsCharacterOnPatrolPoint()
@@ -39,7 +38,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States
                 return;
             if ((Enemy.pointToMove - Enemy.transform.position).magnitude < 0.1f && !_isChilling || Enemy.pointToMove == Vector3.zero)
             {
-                Debug.LogError("IsCharacterOnPatrolPoint");
                 Enemy.StartCoroutine(Chill());
             }
         }
@@ -66,18 +64,15 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             if(Enemy.HasStateAuthority)
             {
                 _isChilling = true;
-                Debug.Log("IS CHILLING");
                 //View.RunningStop();
                 //View.ChillingStart();
                 for (int i = 0; i < Data.ChillTime; i++)
                 {
                     yield return new WaitForSeconds(1);
-                    Debug.LogError("CHILL");
                 }
                 //View.ChillingStop();
                 //View.RunningStart();
                 _isChilling = false;
-                Debug.Log("NOT CHILLING");
                 SetNewPatrollingPoint();
             }
         }

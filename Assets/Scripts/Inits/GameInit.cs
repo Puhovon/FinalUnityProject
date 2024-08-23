@@ -1,3 +1,4 @@
+using Assets.Scripts.Buffs.Fabric;
 using Zenject;
 
 public class GameInit : MonoInstaller
@@ -9,7 +10,7 @@ public class GameInit : MonoInstaller
     {
         // var buffable = playerTransform.GetComponent<IBufuble>();
         // Container.Bind<IBufuble>().FromInstance(buffable).NonLazy();
-        // Container.Bind<BuffFactory>().AsSingle();
+        Container.Bind<BuffFactory>().AsSingle();
         Container.Bind<EnemyFactory>().AsSingle();
         var input = new MainInputActions();
         Container.Bind<MainInputActions>().FromInstance(input);

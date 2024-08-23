@@ -1,23 +1,32 @@
 ﻿using System;
+using Fusion;
+using FMODUnity;
+using UnityEngine;
 using System.Collections;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.PlayerScripts.Configs;
 using Assets.Scripts.PlayerScripts.StateMachine;
-using Fusion;
-using UnityEngine;
+using Assets.Scripts.UI;
 
 namespace Assets.Scripts.PlayerScripts
 {
     public class Shooter : NetworkBehaviour
     {
         [SerializeField] private PlayerConfig _config;
-        [SerializeField] private int _ammo;
         [SerializeField] private ParticleSystem _missParticle;
+        [SerializeField] private StudioEventEmitter _emitter;
+        [SerializeField] private int _ammo;
+
         private int _damageMagnifier = 0;
         private float _timeToNextShoot;
         private bool _canShoot = true;
-
+        private AmmoUI _ui;
+        private int _shoots = 0;
+        
         public Action<PlayerStateData> Shoot;
+
+        public StudioEventEmitter Emmiter => _emitter;
+        
          
         public int DamageMagnifier
         {
@@ -29,29 +38,34 @@ namespace Assets.Scripts.PlayerScripts
         {
             _timeToNextShoot = _config.WalkingStateConfig.TimeToNextShoot;
             Shoot += OnShoot;
+            _emitter = FindObjectOfType<StudioEventEmitter>();
+            FindObjectOfType<SettingsUI>().Initialize(this);
+            _ui = FindObjectOfType<AmmoUI>();
+            _ui.onAmmoChanged?.Invoke(_config.WalkingStateConfig.MaxAmmo);
         }
 
         private void OnShoot(PlayerStateData data)
         {
-            print("SHOOT");
             _ammo = data.Ammo;
             if (!_canShoot)
                 return;
             Attack();
             _canShoot = false;
             data.Ammo -= 1;
+            _shoots++;
+            PlayerPrefs.SetInt("Shoots", _shoots);
+            _ui.onAmmoChanged?.Invoke(data.Ammo);
             StartCoroutine(data.Ammo <= 0 ? Reload(data) : CalculateTimeToNextShoot());
         }
 
         private void Attack()
         {
             RaycastHit hit;
+            _emitter.Play();
             if (Runner.GetPhysicsScene().Raycast(transform.position, transform.forward, out hit, _config.distance))
             {
-                print("Find");
                 if (hit.transform.TryGetComponent(out IDamagable damagable))
                 {
-                    print("Damagable");
                     damagable.Rpc_TakeDamage(_config.damage + _damageMagnifier);
                 }
                 _missParticle.transform.position = hit.point;
@@ -64,9 +78,14 @@ namespace Assets.Scripts.PlayerScripts
 
         private IEnumerator Reload(PlayerStateData data)
         {
-            yield return new WaitForSeconds(_config.ReloadingStateConfig.TimeToReload);
+            for (int i = 1; i <= _config.ReloadingStateConfig.TimeToReload; i++)
+            {
+                yield return new WaitForSeconds(1);
+                _ui.Reload((float)i, _config.ReloadingStateConfig.TimeToReload);
+            }
             _canShoot = true;
             data.Ammo = data.MaxAmmo;
+            _ui.onAmmoChanged?.Invoke(data.Ammo);
         }
 
         private IEnumerator CalculateTimeToNextShoot()
@@ -78,7 +97,7 @@ namespace Assets.Scripts.PlayerScripts
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawRay(transform.position, (transform.forward)* _config.distance);
+            Gizmos.DrawRay(transform.position, transform.forward * _config.distance);
         }
     }
 }

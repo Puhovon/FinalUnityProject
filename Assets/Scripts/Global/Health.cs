@@ -18,10 +18,15 @@ namespace Assets.Scripts.Global
             get => _damageReduction;
             set => _damageReduction = value;
         }
+
         public int HealthPoints
         {
             get => _health;
-            set => _health = value;
+            set
+            {
+                _health = value;
+                HealthChanged?.Invoke(HealthPoints);
+            }
         }
 
         public event Action<int> HealthChanged;

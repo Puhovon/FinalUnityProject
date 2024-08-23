@@ -31,7 +31,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             
             if(finded != null)
                 StateSwitcher.SwitchState<AttackState>();
-
         }
 
         private IEnumerator LoseTimer()

@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
+using Assets.Scripts.NetworkTest;
+using Fusion;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -17,12 +19,11 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
             _player = player;
             Data = data;
             _shooter = shooter;
-            Debug.Log("MovementState is constructing");
         }
 
         protected Shooter Shooter => _shooter;
-        protected MainInputActions Input => _player.Input;
-        protected CharacterController CharacterController => _player.CharacterController;
+        protected NetworkBehaviour Input => _player;
+        protected NetworkCharacterController CharacterController => _player.CharacterController;
         protected PlayerView View => _player.View;
         protected Player Player => _player;
 
@@ -50,14 +51,30 @@ namespace Assets.Scripts.PlayerScripts.StateMachine.States
 
         public void HandleInput()
         {
-            if (!Player.Object.HasStateAuthority)
-                return;
             Data.InputValue = ReadInput();
             Data.Velocity = Data.InputValue * Data.Speed;
         }
 
-        private float2 ReadInput() => Input.Movement.Move.ReadValue<Vector2>();
+        
+        
+        private float2 ReadInput()
+        {
+            if (Input.Runner.TryGetInputForPlayer<NetworkInputData>(Input.Object.InputAuthority, out NetworkInputData data))
+                return new float2(data.movement.x, data.movement.z);
+            return float2.zero;
+        }
         protected bool IsInputZero() => Data.InputValue == Vector2.zero;
-        protected bool isShooting() => Input.Movement.Shoot.IsPressed();
+        protected bool isShooting() {
+            if(Input.Runner.TryGetInputForPlayer<NetworkInputData>(Input.Object.InputAuthority, out NetworkInputData data))
+            {
+                var pressed = data.buttons.GetPressed(Player.ButtonsPrevious);
+                Player.ButtonsPrevious = data.buttons;
+                if (pressed.IsSet(MyButtons.Fire))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

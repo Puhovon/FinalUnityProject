@@ -19,7 +19,7 @@ namespace Assets.Scripts.Enemy.EnemySpawner
         private int _currentWaveRange;
         [SerializeField] private int _currentWaveHeavy;
         private int _currentWaveLite;
-
+        [SerializeField] private int _currentLength;
         private EnemyFactory _factory;
 
         [Inject]
@@ -47,10 +47,11 @@ namespace Assets.Scripts.Enemy.EnemySpawner
             _wave.SpawnNewWave += Spawn;
         }
 
-        private void Spawn()
+        public void Spawn()
         {
-            if (HasStateAuthority)
+            if (Object.HasStateAuthority)
             {
+                print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 StartCoroutine(SpawnEnemyByType(_currentWaveHeavy, EnemyType.HeavyMelly, IncrementHeavyCount));
                 //StartCoroutine(SpawnEnemyByType(_currentWaveLite, EnemyType.HeavyMelly, IncrementLiteCount));
                 //StartCoroutine(SpawnEnemyByType(_currentWaveRange, EnemyType.Range, IncrementRangeCount));
@@ -59,19 +60,18 @@ namespace Assets.Scripts.Enemy.EnemySpawner
 
         private IEnumerator SpawnEnemyByType(int currentLength, EnemyType type, Action incrementCount)
         {
+            _currentLength = currentLength;
             for (int i = 0; i < currentLength; i++)
             {
-                RpcSpawnEnemy(type);
+                SpawnEnemy(type);
                 yield return new WaitForSeconds(0.5f);
             }
             incrementCount();
         }
 
-        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-        private void RpcSpawnEnemy(EnemyType type)
+        private void SpawnEnemy(EnemyType type)
         {
-            var enemy = _factory.Spawn(type, spawnPoint, _patrollingPoints);
-            Runner.Spawn(enemy, spawnPoint.position, Quaternion.identity);
+            _factory.Spawn(type, spawnPoint, this);
         }
 
         private void IncrementRangeCount()

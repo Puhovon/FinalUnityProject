@@ -4,13 +4,20 @@ using UnityEngine;
 
 namespace Assets.Scripts.Buffs
 {
-    public class DamageBuff : MonoBehaviour, IBuff
+    public class DamageBuff : Buff
     {
-        [SerializeField] private Shooter _shooter;
         [SerializeField] private int _damageMagnifier;
-        public void StartBuff() => _shooter.DamageMagnifier += _damageMagnifier;
-        
 
-        public void EndBuff() => _shooter.DamageMagnifier -= _damageMagnifier;
+        public override void StartBuff()
+        {
+            base.StartBuff();
+            Shooter.DamageMagnifier += _damageMagnifier;
+        }
+        
+        public override void EndBuff()
+        {
+            Shooter.DamageMagnifier -= _damageMagnifier;
+            base.EndBuff();
+        }
     }
 }

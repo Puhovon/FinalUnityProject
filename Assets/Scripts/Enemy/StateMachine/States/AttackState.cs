@@ -42,7 +42,6 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             if (finded == null)
                 StateSwitcher.SwitchState<LoseState>();
 
-            
             IsCanAttack(finded);
         }
 
@@ -73,6 +72,5 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             yield return new WaitForSeconds(_config.TimeToNextAttack);
             _canAttack = true;
         }
-
     }
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using Assets.Scripts.Abstractions;
+﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.Utilities;
 using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
 #pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
 
@@ -17,8 +15,6 @@ namespace Assets.Scripts.Enemy.StateMachine
 
         [Networked] public Vector3 pointToMove { get; set; }
         
-        [SerializeField] private Transformer _transformer;
-
         [Header("Settings")]
 
         [SerializeField] private EnemyConfigs _config;
@@ -33,7 +29,6 @@ namespace Assets.Scripts.Enemy.StateMachine
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
         public EnemyView View => _view;
         public EnemyConfigs Config => _config;
-        public Transform[] PatrollingPoints => _transformer.Transforms;
 
         private void Awake()
         {
@@ -42,7 +37,6 @@ namespace Assets.Scripts.Enemy.StateMachine
 
         public override void Spawned()
         {
-            base.Spawned();
             _navMeshAgent.speed = _config.PatrollingConfig.Speed;
         }
 
@@ -53,7 +47,6 @@ namespace Assets.Scripts.Enemy.StateMachine
             _stateMachine = new EnemyStateMachine(this,
                 _config,
                 data, _navMeshAgent);
-            print(PatrollingPoints.Length);
         }
 
         public override void FixedUpdateNetwork()

@@ -2,31 +2,33 @@ using System.Collections;
 using Fusion;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Zenject;
 
-public class Messagging : NetworkBehaviour
+public class Messagging
 {
-    [SerializeField] private TMP_Text _text;
-
+    private TMP_Text _text;
+    private NetworkBehaviour _behaviour;
+    private Coroutine _coroutine;
     private MainInputActions _actions;
     
-    public void Construct(MainInputActions actions)
+    public Messagging(NetworkBehaviour behaviour, TMP_Text text)
     {
-        print("Messaging Construct");
-        _actions = actions;
-        _actions.Movement.Help.performed += NeedHelp;
+        _text = text;
+        _behaviour = behaviour;
     }
-    
-    private void NeedHelp(InputAction.CallbackContext context)
+
+    public void NeedHelp()
     {
-        StartCoroutine(MessageTimer("Need help!"));
+        if(_coroutine != null)
+        {
+            _behaviour.StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+        _coroutine = _behaviour.StartCoroutine(MessageTimer("Need help"));
     }
     
     
     private IEnumerator MessageTimer(string message)
     {
-        print("TEXTING");
         Rpc_SetText(message);
         yield return new WaitForSeconds(1);
         Rpc_SetText("");
