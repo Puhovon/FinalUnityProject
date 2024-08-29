@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using Fusion;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Buffs.Fabric
 {
@@ -26,7 +25,7 @@ namespace Assets.Scripts.Buffs.Fabric
         private void Load()
         {
             _buffs = Resources.LoadAll<GameObject>(Path.Combine(BuffsPath));
-            Debug.LogError(_buffs.Length);
+            Debug.Log("Load buffs");
         }
     }
 }

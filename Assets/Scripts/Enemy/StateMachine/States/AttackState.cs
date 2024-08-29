@@ -61,15 +61,16 @@ namespace Assets.Scripts.Enemy.StateMachine.States
         {
             if (_canAttack && finded.Transform.TryGetComponent(out IDamagable damagable))
             {
-                damagable.Rpc_TakeDamage(_config.Damage);
-                _enemy.StartCoroutine(Reload());
+                View.Shoot();
+                _enemy.StartCoroutine(Reload(damagable));
             }
         }
 
-        private IEnumerator Reload()
+        private IEnumerator Reload(IDamagable damagable)
         {
             _canAttack = false;
             yield return new WaitForSeconds(_config.TimeToNextAttack);
+            damagable.Rpc_TakeDamage(_config.Damage);
             _canAttack = true;
         }
     }

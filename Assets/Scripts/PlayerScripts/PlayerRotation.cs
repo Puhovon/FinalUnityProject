@@ -19,7 +19,6 @@ namespace Assets.Scripts.PlayerScripts
                 _camera = _cameraManager.GetCamera;
 
             }
-            Debug.LogError(_camera);
         }
 
         public override void FixedUpdateNetwork()

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions;
+using Assets.Scripts.Buffs.Fabric;
 using Assets.Scripts.Utilities;
 using Fusion;
 using UnityEngine;
@@ -18,8 +19,8 @@ namespace Assets.Scripts.Enemy.StateMachine
         [Header("Settings")]
 
         [SerializeField] private EnemyConfigs _config;
-        [SerializeField] private EnemyType _type;
         [SerializeField] private EnemyView _view;
+        [SerializeField] private EnemyDie _die;
         
         public Vector3 _currentTransfrom;
         
@@ -29,6 +30,7 @@ namespace Assets.Scripts.Enemy.StateMachine
         public NavMeshAgent NavMeshAgent => _navMeshAgent;
         public EnemyView View => _view;
         public EnemyConfigs Config => _config;
+        private bool _spawned;
 
         private void Awake()
         {
@@ -38,6 +40,8 @@ namespace Assets.Scripts.Enemy.StateMachine
         public override void Spawned()
         {
             _navMeshAgent.speed = _config.PatrollingConfig.Speed;
+            _spawned = true;
+            _die.Init(new BuffFactory());
         }
 
         private void InitializeDeps()
@@ -51,7 +55,8 @@ namespace Assets.Scripts.Enemy.StateMachine
 
         public override void FixedUpdateNetwork()
         {
-            _stateMachine.Update();
+            if(_spawned)
+                _stateMachine.Update();
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -77,7 +82,6 @@ namespace Assets.Scripts.Enemy.StateMachine
 
         public void InvokeRpcSetPatrollingPoint()
         {
-            
             if(!HasStateAuthority)
                 return;
             RpcSetPatrollingPoint();

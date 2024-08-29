@@ -1,5 +1,4 @@
 using System.IO;
-using Assets.Scripts.Enemy;
 using Fusion;
 using UnityEngine;
 using Zenject;
@@ -21,9 +20,12 @@ public class EnemyFactory
     {
         _instantiator = instantiator;
         Load();
+        Debug.LogError($"Heavy: {_heavyMelly is null}");
+        Debug.LogError($"Range: {_range is null}");
+        Debug.LogError($"Small: {_smallMelly is null}");
     }
 
-    public void Spawn(EnemyType type, Transform transform, NetworkBehaviour b)
+    public GameObject Spawn(EnemyType type, Transform transform, NetworkBehaviour b)
     {
         GameObject prefab = type switch
         {
@@ -32,12 +34,13 @@ public class EnemyFactory
             EnemyType.LiteMelly => _smallMelly,
             _ => null,
         };
-        b.Runner.Spawn(prefab);
+        return prefab;
     }
 
     private void Load()
     {
         _heavyMelly = Resources.Load<GameObject>(Path.Combine(PrefabsPath, Heavy));
         _range = Resources.Load<GameObject>(Path.Combine(PrefabsPath, Range));
+        _smallMelly = Resources.Load<GameObject>(Path.Combine(PrefabsPath, Lite));
     }
 }

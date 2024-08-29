@@ -1,5 +1,4 @@
-﻿using FMOD.Studio;
-using Fusion;
+﻿using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.PlayerScripts
@@ -51,6 +50,12 @@ namespace Assets.Scripts.PlayerScripts
             }
         }
 
+        public void Shoot()
+        {
+                
+        }
+        
+
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
         private void RPC_SetIdling(bool isIdling)
         {
@@ -62,5 +67,11 @@ namespace Assets.Scripts.PlayerScripts
         {
             _animator.SetBool(IsRunning, isRunning);
         }
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void Rpc_Shoot()
+        {
+            // _animator.SetTrigger(, isIdling);
+        }
+
     }
 }

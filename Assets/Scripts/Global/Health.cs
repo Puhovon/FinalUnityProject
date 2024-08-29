@@ -45,9 +45,13 @@ namespace Assets.Scripts.Global
             if (damage <= 0)
                 throw new ArgumentOutOfRangeException("damage must be greater than 0");
             _health -= (damage - _damageReduction);
+            print("Take damage and current health is: " + _health);
             HealthChanged?.Invoke(_health);
             if (_health <= 0)
+            {
                 Die?.Invoke();
+                
+            }
         }
     }
 }

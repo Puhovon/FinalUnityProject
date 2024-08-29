@@ -64,14 +64,14 @@ namespace Assets.Scripts.Enemy.StateMachine.States
             if(Enemy.HasStateAuthority)
             {
                 _isChilling = true;
-                //View.RunningStop();
-                //View.ChillingStart();
+                View.RunningStop();
+                View.IdlingStart();
                 for (int i = 0; i < Data.ChillTime; i++)
                 {
                     yield return new WaitForSeconds(1);
                 }
-                //View.ChillingStop();
-                //View.RunningStart();
+                View.IdlingStop();
+                View.RunningStart();
                 _isChilling = false;
                 SetNewPatrollingPoint();
             }

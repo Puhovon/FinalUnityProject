@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: RangeEnemy
   m_EditorClassIdentifier: 
   _patrollingConfig:
-    Speed: 1
+    Speed: 3
     DistanceToDetect: 15
     ChillTime: 2
+    MaxDistanceToMove: 5
   _detectedConfig:
     Speed: 1
     TimeToLosePlayer: 5

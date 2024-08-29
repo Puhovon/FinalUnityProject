@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using System;
+using Fusion;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy.StateMachine
@@ -7,20 +8,85 @@ namespace Assets.Scripts.Enemy.StateMachine
     public class EnemyView : NetworkBehaviour
     {
         [SerializeField] private Animator _animator;
-        
+
         private const string isIdling = "IsIdling";
         private const string isRunning = "IsRunning";
         private const string isChilling = "IsChilling";
+        private const string Punch = "Punch";
+
+        public void IdlingStop()
+        {
+            if (HasStateAuthority)
+            {
+                Rpc_SetIdling(false);
+            }
+        }
+
+        public void IdlingStart()
+        {
+            if (HasStateAuthority)
+            {
+                Rpc_SetIdling(true);
+            }
+        }
+
+        public void RunningStart()
+        {
+            if (HasStateAuthority)
+            {
+
+                Rpc_SetRunning(true);
+            }
+        }
+
+        public void RunningStop()
+        {
+            if (HasStateAuthority)
+            {
+                Rpc_SetRunning(false);
+            }
+        }
+
+        // public void ChillingStart()
+        // {
+        //     if (HasStateAuthority)
+        //     {
+        //
+        //     }
+        // }
+        //
+        // public void ChillingStop()
+        // {
+        //     if (HasStateAuthority)
+        //     {
+        //
+        //     }
+        // }
+
+        public void Shoot()
+        {
+            if (HasStateAuthority)
+            {
+                Rpc_Shoot();
+            }
+        }
         
-  
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void Rpc_SetIdling(bool IsIdling)
+        {
+            _animator.SetBool(isIdling, IsIdling);
+        }
 
-        public void IdlingStop() => _animator.SetBool(isIdling, false);
-        public void IdlingStart() => _animator.SetBool(isIdling, true);
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void Rpc_SetRunning(bool IsRunning)
+        {
+            _animator.SetBool(isRunning, IsRunning);
+        }
 
-        public void RunningStart() => _animator.SetBool(isRunning, true);
-        public void RunningStop() => _animator.SetBool(isRunning, false);
-
-        public void ChillingStart() => _animator.SetBool(isChilling, true);
-        public void ChillingStop() => _animator.SetBool(isChilling, false);
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void Rpc_Shoot()
+        {
+            _animator.SetTrigger(Punch);   
+        }
     }
 }

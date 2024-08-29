@@ -13,7 +13,6 @@ namespace Assets.Scripts.UI
         private void OnEnable()
         {
             _health.HealthChanged += OnHealthChanged;
-            Debug.LogError("Submit to HealthChanged");
         }
             
         private void OnDisable()
@@ -26,7 +25,6 @@ namespace Assets.Scripts.UI
             if (HasStateAuthority)
             {
                 _slider.value = healthPoints;
-                Debug.Log("Slider value changed");
             }
         }
     }

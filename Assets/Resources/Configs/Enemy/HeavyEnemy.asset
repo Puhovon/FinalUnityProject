@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeavyEnemy
   m_EditorClassIdentifier: 
   _patrollingConfig:
-    Speed: 3
+    Speed: 4
     DistanceToDetect: 5
     ChillTime: 2
     MaxDistanceToMove: 10

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts.Buffs.Fabric;
 using Assets.Scripts.Global;
 using Assets.Scripts.Global.Configs;
 using Fusion;
@@ -14,14 +15,14 @@ namespace Assets.Scripts.Enemy.EnemySpawner
         [SerializeField] private LevelConfig _levelConfig;
         [SerializeField] private Wave _wave;
         [SerializeField] private Transform spawnPoint;
-        [SerializeField] private Transform[] _patrollingPoints;
 
-        private int _currentWaveRange;
+        [SerializeField] private int _currentWaveRange;
         [SerializeField] private int _currentWaveHeavy;
-        private int _currentWaveLite;
+        [SerializeField] private int _currentWaveLite;
         [SerializeField] private int _currentLength;
         private EnemyFactory _factory;
-
+        private BuffFactory _factoryBuff;
+        
         [Inject]
         public void Construct(EnemyFactory factory)
         {
@@ -40,7 +41,9 @@ namespace Assets.Scripts.Enemy.EnemySpawner
                 Destroy(gameObject);
                 return;
             }
-            
+
+            _factoryBuff = new BuffFactory();
+            _currentLength = 2;
             _currentWaveHeavy = _levelConfig.HeavyWaveConfig.StartCount;
             _currentWaveLite = _levelConfig.LiteWaveConfig.StartCount;
             _currentWaveRange = _levelConfig.RangeWaveConfig.StartCount;
@@ -49,29 +52,33 @@ namespace Assets.Scripts.Enemy.EnemySpawner
 
         public void Spawn()
         {
-            if (Object.HasStateAuthority)
+            if (Runner.IsServer)
             {
-                print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                StartCoroutine(SpawnEnemyByType(_currentWaveHeavy, EnemyType.HeavyMelly, IncrementHeavyCount));
-                //StartCoroutine(SpawnEnemyByType(_currentWaveLite, EnemyType.HeavyMelly, IncrementLiteCount));
-                //StartCoroutine(SpawnEnemyByType(_currentWaveRange, EnemyType.Range, IncrementRangeCount));
+                SpawnEnemyByType(_currentLength);
             }
         }
 
-        private IEnumerator SpawnEnemyByType(int currentLength, EnemyType type, Action incrementCount)
+        private void SpawnEnemyByType(int currentLength)
         {
             _currentLength = currentLength;
+            print(currentLength);
             for (int i = 0; i < currentLength; i++)
             {
-                SpawnEnemy(type);
-                yield return new WaitForSeconds(0.5f);
+                // SpawnEnemy(EnemyType.HeavyMelly);
+                SpawnEnemy(EnemyType.HeavyMelly);
             }
-            incrementCount();
+
+            _currentLength += 2;
         }
 
         private void SpawnEnemy(EnemyType type)
         {
-            _factory.Spawn(type, spawnPoint, this);
+            var prefab = _factory.Spawn(type, spawnPoint, this);
+            if(Runner.IsServer)
+            {
+                Runner.Spawn(prefab);
+                // prefab.GetComponentInChildren<EnemyDie>().Init(_factoryBuff);
+            }
         }
 
         private void IncrementRangeCount()

@@ -11,7 +11,7 @@ namespace Assets.Scripts.Global
 
         [SerializeField] private float _currentTime;
         [SerializeField] private EnemySpawner _spawner;
-        private bool waweInvoked;
+        private bool waveInvoked;
         public event Action SpawnNewWave;
 
         private void Awake()
@@ -27,11 +27,11 @@ namespace Assets.Scripts.Global
             _currentTime -= Runner.DeltaTime;
             if (_currentTime <= 0)
             {
-                if(!waweInvoked)
+                if(!waveInvoked)
                     _spawner.Spawn();
-                waweInvoked = true;
+                waveInvoked = true;
                 _currentTime = 10000;
-                waweInvoked = false;
+                waveInvoked = false;
             }
         }
     }
