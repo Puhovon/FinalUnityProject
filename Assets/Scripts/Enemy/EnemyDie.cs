@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Buffs.Fabric;
+﻿using System.Collections;
+using Assets.Scripts.Buffs.Fabric;
+using Assets.Scripts.Enemy.StateMachine;
 using Assets.Scripts.Global;
 using Fusion;
 using UnityEngine;
@@ -10,9 +12,11 @@ namespace Assets.Scripts.Enemy
     {
         [SerializeField] private Health _health;
         private BuffFactory _factory;
-
-        public void Init(BuffFactory factory)
+        private EnemyView _view;
+        
+        public void Init(BuffFactory factory, EnemyView view)
         {
+            _view = view;
              _health.Die += Die;
              _factory = factory;
              print("Init die");
@@ -20,12 +24,18 @@ namespace Assets.Scripts.Enemy
         
         private void Die()
         {
-            print("Die");
+            StartCoroutine(DieCor());
+            _view.Dying();
+            print("Despawned");
+        }
+
+        private IEnumerator DieCor()
+        {
+            yield return new WaitForSeconds(2);
+            var obj = transform.GetComponent<NetworkObject>();
             Rpc_SpawnBuff();
-            var obj = transform.parent.GetComponent<NetworkObject>();
             _health.Die -= Die;
             Runner.Despawn(obj);
-            print("Despawned");
         }
 
         [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

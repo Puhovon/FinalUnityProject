@@ -8518,7 +8518,6 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: f609bb13b26a49d438fdc819a703c69e, type: 2}
   _view: {fileID: 5296641747523110942}
   _shooter: {fileID: 4731882136871466510}
-  _cameraFollow: {fileID: 8307319030720795989}
 --- !u!114 &6040934037101837264
 MonoBehaviour:
   m_ObjectHideFlags: 0

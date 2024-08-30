@@ -41,7 +41,7 @@ namespace Assets.Scripts.Enemy.StateMachine
         {
             _navMeshAgent.speed = _config.PatrollingConfig.Speed;
             _spawned = true;
-            _die.Init(new BuffFactory());
+            _die.Init(new BuffFactory(), _view);
         }
 
         private void InitializeDeps()
@@ -66,6 +66,7 @@ namespace Assets.Scripts.Enemy.StateMachine
                 NavMeshAgent);
             pointToMove = point;
             NavMeshAgent.SetDestination(pointToMove);
+            Transform.LookAt(pointToMove);
         }
 
         private void OnDrawGizmos()

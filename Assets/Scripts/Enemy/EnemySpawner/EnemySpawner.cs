@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Assets.Scripts.Buffs.Fabric;
+﻿using Assets.Scripts.Buffs.Fabric;
 using Assets.Scripts.Global;
 using Assets.Scripts.Global.Configs;
 using Fusion;
@@ -64,8 +62,9 @@ namespace Assets.Scripts.Enemy.EnemySpawner
             print(currentLength);
             for (int i = 0; i < currentLength; i++)
             {
-                // SpawnEnemy(EnemyType.HeavyMelly);
                 SpawnEnemy(EnemyType.HeavyMelly);
+                SpawnEnemy(EnemyType.LiteMelly);
+                SpawnEnemy(EnemyType.Range);
             }
 
             _currentLength += 2;

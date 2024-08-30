@@ -12,15 +12,5 @@ namespace Assets.Scripts.Buffs
             base.StartBuff();
             Buffable.HealthPoints += _healthToAdd;
         }
-
-        public override void EndBuff()
-        {
-            if (Buffable.HealthPoints - _healthToAdd <= 0)
-            {
-                Buffable.HealthPoints = 1;
-            } else 
-                Buffable.HealthPoints -= _healthToAdd;
-            base.EndBuff();
-        }
     }
 }

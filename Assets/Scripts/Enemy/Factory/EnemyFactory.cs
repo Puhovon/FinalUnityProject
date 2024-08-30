@@ -20,9 +20,6 @@ public class EnemyFactory
     {
         _instantiator = instantiator;
         Load();
-        Debug.LogError($"Heavy: {_heavyMelly is null}");
-        Debug.LogError($"Range: {_range is null}");
-        Debug.LogError($"Small: {_smallMelly is null}");
     }
 
     public GameObject Spawn(EnemyType type, Transform transform, NetworkBehaviour b)

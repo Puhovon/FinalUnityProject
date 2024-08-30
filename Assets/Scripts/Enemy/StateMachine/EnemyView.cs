@@ -47,6 +47,16 @@ namespace Assets.Scripts.Enemy.StateMachine
             }
         }
 
+        public void Dying()
+        {
+            if (HasStateAuthority)
+            {
+                Rpc_Die();
+            }
+        }
+
+       
+        
         // public void ChillingStart()
         // {
         //     if (HasStateAuthority)
@@ -87,6 +97,12 @@ namespace Assets.Scripts.Enemy.StateMachine
         private void Rpc_Shoot()
         {
             _animator.SetTrigger(Punch);   
+        }
+        
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void Rpc_Die()
+        {
+            _animator.SetTrigger("Die");
         }
     }
 }
