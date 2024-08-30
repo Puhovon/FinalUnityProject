@@ -9019,7 +9019,6 @@ MonoBehaviour:
   - {fileID: 4879117235660887157}
   - {fileID: 6740778237049957655}
   - {fileID: 7549216468442138906}
-  - {fileID: 8471696393640161972}
   - {fileID: 8307319030720795989}
 --- !u!114 &7652565546230520454
 MonoBehaviour:
@@ -9036,7 +9035,6 @@ MonoBehaviour:
   _config: {fileID: 11400000, guid: f609bb13b26a49d438fdc819a703c69e, type: 2}
   _view: {fileID: 1091938629700827982}
   _shooter: {fileID: 1391493210212959223}
-  _cameraFollow: {fileID: 8307319030720795989}
 --- !u!114 &1391493210212959223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9050,8 +9048,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: f609bb13b26a49d438fdc819a703c69e, type: 2}
-  _ammo: 0
   _missParticle: {fileID: 5221826956920870989}
+  _emitter: {fileID: 0}
+  _ammo: 0
 --- !u!95 &8873949338099501136
 Animator:
   serializedVersion: 5
@@ -9099,6 +9098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
+  _cameraManager: {fileID: 0}
 --- !u!143 &1543292900233694128
 CharacterController:
   m_ObjectHideFlags: 0
@@ -9878,6 +9878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad29761c82d44b7a0a050a44df66d2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 0}
 --- !u!1 &6882664002762437996
 GameObject:
   m_ObjectHideFlags: 0

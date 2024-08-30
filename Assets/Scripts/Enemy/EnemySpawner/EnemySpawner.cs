@@ -67,7 +67,7 @@ namespace Assets.Scripts.Enemy.EnemySpawner
                 SpawnEnemy(EnemyType.Range);
             }
 
-            _currentLength += 2;
+            _currentLength += 1;
         }
 
         private void SpawnEnemy(EnemyType type)

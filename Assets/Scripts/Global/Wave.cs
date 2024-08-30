@@ -30,7 +30,7 @@ namespace Assets.Scripts.Global
                 if(!waveInvoked)
                     _spawner.Spawn();
                 waveInvoked = true;
-                _currentTime = 10000;
+                _currentTime = _timeToNextWave;
                 waveInvoked = false;
             }
         }
